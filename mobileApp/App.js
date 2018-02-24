@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import MapView from "react-native-maps";
 import {
   Platform,
   StyleSheet,
@@ -24,6 +25,15 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
+          <MapView
+              style={StyleSheet.absoluteFill}
+              initialRegion={{
+                  latitude: 11,
+                  longitude: 12,
+                  latitudeDelta: 0.09,
+                  longitudeDelta:0.09,
+              }}
+          />
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>
