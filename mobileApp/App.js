@@ -7,11 +7,13 @@
 import React, { Component } from 'react';
 import RNPlaces from 'react-native-google-places';
 import MapView from "react-native-maps";
-import uuid from "uuid/v4";
+import uuid from "uuid/v4"
+import heatView from "./web/heatView.html";
 
 import {
   StyleSheet,
   Text,
+    WebView,
     TouchableWithoutFeedback,
   View,
   Button
@@ -25,10 +27,20 @@ export default class App extends Component {
         dest: {name: "Enter Destination"},
         text:" Hello",
         coords: [],
-        latitude:0,
-        longitude:0,
+        latitude: 0,
+        longitude: 0,
         uuid: "None"
     };
+  }
+
+  _generateHeatMap = () => {
+      const uri = '../heatView.html';
+      return <WebView
+          style={{opacity: 0.2}}
+          source={heatView}
+          scrollEnabled={false}
+          javaScriptEnabled
+      />;
   }
 
   destChange = (dest) =>{
@@ -110,6 +122,9 @@ export default class App extends Component {
                   strokeWidth={2}
                   strokeColor="red"/>
           </MapView>
+          <View style={StyleSheet.absoluteFill}>
+              {this._generateHeatMap()}
+          </View>
           <TouchableWithoutFeedback onPress={this._onAutocomplete}>
               <View
                   style={{
@@ -140,8 +155,7 @@ export default class App extends Component {
             }}>
                 <Button
                   title = {"Directions"}
-                  onPress = {this._route}
-                />
+                  onPress = {this._route}/>
           </View>
       </View>
     );
