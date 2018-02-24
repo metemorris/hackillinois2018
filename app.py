@@ -23,6 +23,13 @@ def home():
     """Render website's home page."""
     return render_template('home.html')
 
+@app.route('/update', methods=['POST'])
+def my_test_endpoint():
+    input_json = request.get_json(force=True)
+    # force=True, above, is necessary if another developer
+    # forgot to set the MIME type to 'application/json'
+    return render_template('home.html')
+
 
 @app.route('/about/')
 def about():
