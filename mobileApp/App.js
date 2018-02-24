@@ -12,7 +12,6 @@ import {
   Text,
     TouchableWithoutFeedback,
   View,
-  TextInput,
   Button
 } from 'react-native';
 import {getDirections, getPolyLines} from "./apis/maps";
@@ -21,16 +20,17 @@ export default class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+        dest: {name: "Enter Destination"},
         text:" Hello",
         coords: []
     };
   }
 
   destChange = (dest) =>{
-    this.setState({text:dest})
+    this.setState({text: dest})
   }
+
   getPosition = () =>{
-    clat,clong;
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -41,9 +41,9 @@ export default class App extends Component {
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-  );
-    return {clat,clong};
+    );
   }
+
   getLatLong = () =>{
     //get lat and long of string 
     if(this.state.text == "Home"){
@@ -53,12 +53,21 @@ export default class App extends Component {
       return {lat: 42.53206, lng: -84.58992}
     }
   }
+
   _route = () => {
       getDirections(this.getPosition, this.getLatLong())
         .then((data) => {
             console.log(data.routes);
             this.setState({coords: getPolyLines(data.routes)})
         })
+  }
+
+  _onAutocomplete = ()  => {
+      RNPlaces.openAutocompleteModal()
+          .then((data) => {
+              console.log(JSON.stringify(data))
+              this.setState({dest: data});
+          })
   }
 
   render() {
@@ -70,37 +79,40 @@ export default class App extends Component {
                   latitude: 41.43206,
                   longitude: -81.38992,
                   latitudeDelta: 0.81,
-                  longitudeDelta:0.81,
+                  longitudeDelta: 0.81,
               }}>
               <MapView.Polyline
                   coordinates={this.state.coords}
                   strokeWidth={2}
                   strokeColor="red"/>
           </MapView>
-          <TouchableWithoutFeedback onPress={() => RNPlaces.openAutocompleteModal()}>
+          <TouchableWithoutFeedback onPress={this._onAutocomplete}>
               <View
                   style={{
-                      backgroundColor:"#fff",
-                      padding:15,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      backgroundColor: "#fff",
+                      padding: 15,
                       width:"80%",
-                      bottom:60,
+                      bottom: 75,
                       position: "absolute",
-                      borderRadius:15,
+                      borderRadius: 15,
                       shadowColor: "#222",
                       shadowOpacity: 0.35,
                       shadowRadius: 5,
-                      shadowOffset: {width:1, height:1}
-                  }}
-              />
+                      shadowOffset: {width: 1, height: 1}
+                  }} >
+                  <Text> {this.state.dest.name} </Text>
+              </View>
           </TouchableWithoutFeedback>
           <View 
               style={{
-                  bottom:10,
-                  position:"absolute",
-                  paddingHorizontal:5,
-                  paddingVertical:5,
-                  backgroundColor:"white",
-                  borderRadius:50
+                  bottom: 15,
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
             }}>
                 <Button
                   title = {"Directions"}
