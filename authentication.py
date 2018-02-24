@@ -27,6 +27,22 @@ class Firebase:
         self.firebase.post(str(dt.year)+'/'+str(dt.month)+'/'+str(dt.day)+'/'+str(dt.hour)+'/'+user_id,
                            data={'lat': lat, 'long': long, 'locKey':lat_long_key})
 
+    def getIncidents(self,current_point):
+        incident_result = self.firebase.get("incident", None)
+        #print(incident_result)
+        locations = []
+        for i in incident_result:
+            #print(i)
+            locations.append(self.decryptLocation(i))
+        #print(locations)
+        tree = KDTree(locations, distance_metric='Arc', radius=pysal.cg.RADIUS_EARTH_MILES)
+
+        # get all points within 1 mile of 'current_point'
+        indices = tree.query_ball_point(current_point, 5)
+        print(indices)
+        userid = []
+        emoticons = {}
+        rteurn
     def getTraffic(self,current_point):
         locations_result = self.firebase.get("location", None)
         #print(locations_result)
