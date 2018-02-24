@@ -6,19 +6,9 @@ class Firebase:
     def __init__(self):
         self.firebase = firebase.FirebaseApplication(self.DATABASE_URL, None)
 
-    def getUsers(self):
-        return self.firebase.get('/users', None)
-
-    def setUsers(self):
-        result = self.firebase.post('/2018/02/24/00/40', data={"fucku":"hamza"}, params={'print': 'pretty'})
-        if result != None:
-            return True
-        else:
-            return False
-
     def addEntry(self, lat, long):
-        lat = (lat+90)*10000
-        long = (long+180)*10000
+        lat = (lat+90)*100000
+        long = (long+180)*100000
         user_id = str(int(lat))+'-'+str(int(long))
         dt = datetime.datetime.now()
         self.firebase.put('/location', user_id, data={'loc': user_id})
@@ -27,5 +17,13 @@ class Firebase:
 
 
 boop = Firebase()
-boop.setUsers()
-boop.addEntry(76.3, -77)
+locations = [(41.835461, -87.624957),
+             (41.835593, -87.624914),
+             (41.835673, -87.625193),
+             (41.835194, -87.625108),
+             (41.835082, -87.624893),
+             (60.70546, -43.810708),
+             (90.709179, -53.820574)]
+
+for i in locations:
+    boop.addEntry(i[0], i[1])
