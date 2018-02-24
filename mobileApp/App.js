@@ -14,7 +14,7 @@ import {
   TextInput,
   Button
 } from 'react-native';
-import {getDirections} from "./apis/maps";
+import {getDirections, getPolyLines} from "./apis/maps";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -27,17 +27,21 @@ export default class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      text:" Hello"
+        text:" Hello",
+        coords: [],
     };
   }
 
-  destChange = ( dest )=>{
+  destChange = (dest) =>{
     this.setState({text:dest})
   }
 
   _route = () => {
       getDirections({lat: 41.43206, lng: -81.38992}, {lat: 41.53206, lng: -81.58992})
-        .then((data) => console.log(JSON.stringify(data)))
+        .then((data) => {
+            console.log(data.routes);
+            this.setState({coords: getPolyLines(data.routes)})
+        })
   }
 
   render() {
@@ -46,12 +50,16 @@ export default class App extends Component {
           <MapView
               style={StyleSheet.absoluteFill}
               initialRegion={{
-                  latitude: 11,
-                  longitude: 12,
-                  latitudeDelta: 0.09,
-                  longitudeDelta:0.09,
-              }}
-          />
+                  latitude: 41.43206,
+                  longitude: -81.38992,
+                  latitudeDelta: 0.81,
+                  longitudeDelta:0.81,
+              }}>
+              <MapView.Polyline
+                  coordinates={this.state.coords}
+                  strokeWidth={2}
+                  strokeColor="red"/>
+          </MapView>
           <TextInput 
             value = {this.state.text}
             onChangeText={this.destChange}

@@ -1,3 +1,4 @@
+import Polyline from "@mapbox/polyline"
 const API_KEY = "AIzaSyC51AmIegsbVJYl27hbh-yzcLJs7FaAEIE";
 
 const BASE_URI = "https://maps.googleapis.com/maps/api/directions/json?";
@@ -12,4 +13,15 @@ const getDirections = (origin, dest, mode="walking") => {
     return fetch(uri).then((res) => res.json())
 }
 
-export { getDirections }
+const getPolyLines = (routes) => {
+    let points = Polyline.decode(routes[0].overview_polyline.points);
+    let coords = points.map((point) => {
+        return  {
+            latitude : point[0],
+            longitude : point[1]
+        }
+    })
+    return coords;
+}
+
+export { getDirections, getPolyLines }
