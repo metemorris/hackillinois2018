@@ -7,7 +7,7 @@ const generateUri = (origin, dest, mode=) =>
     `${BASE_URI}origin=${origin}&dest=${dest}&mode=${mode}&key=${API_KEY}`
 
 const getDirections = (origin, dest, mode="walking") => {
-    const uri = generateUri(origin, dest, mode)
+    const uri = generateUri(geo(origin), geo(dest), mode)
     console.log(uri)
     return fetch(uri).then((res) => res.json())
 }
