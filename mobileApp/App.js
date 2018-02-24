@@ -28,12 +28,27 @@ export default class App extends Component {
     super(props);
     this.state = {
         text:" Hello",
-        coords: [],
+        coords: []
     };
   }
 
   destChange = (dest) =>{
     this.setState({text:dest})
+  }
+  getPosition = () =>{
+    clat,clong;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          cLat: position.coords.latitude,
+          cLong: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+  );
+    return {clat,clong};
   }
   getLatLong = () =>{
     //get lat and long of string 
@@ -45,7 +60,7 @@ export default class App extends Component {
     }
   }
   _route = () => {
-      getDirections({lat: 41.43206, lng: -81.38992}, this.getLatLong())
+      getDirections(this.getPosition, this.getLatLong())
         .then((data) => {
             console.log(data.routes);
             this.setState({coords: getPolyLines(data.routes)})
