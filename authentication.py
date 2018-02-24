@@ -28,16 +28,18 @@ class Firebase:
                            data={'lat': lat, 'long': long, 'locKey':lat_long_key})
 
     def getTraffic(self,current_point):
-        locations_result = self.firebase.get("location",None)
+        locations_result = self.firebase.get("location", None)
+        #print(locations_result)
         locations = []
         for i in locations_result:
+            #print(i)
             locations.append(self.decryptLocation(i))
         #print(locations)
         tree = KDTree(locations, distance_metric='Arc', radius=pysal.cg.RADIUS_EARTH_MILES)
 
         # get all points within 1 mile of 'current_point'
         indices = tree.query_ball_point(current_point, 5)
-
+        #print(indices)
         count = 0
         dt = datetime.datetime.now()
         year = dt.year
@@ -78,7 +80,7 @@ class Firebase:
         result = self.firebase.get(str(year) + '/' + str(month) + '/' + str(day) + '/' + str(hour) + '/' + user, None)
         key = list(result.keys())[0]
         obj = result[key]
-        print(obj)
+        #print(obj)
         self.deleteLocation(obj["locKey"])
         self.deleteTimeShit(user)
 

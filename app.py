@@ -24,6 +24,7 @@ def home():
     """Render website's home page."""
     return render_template('home.html')
 
+
 @app.route('/update', methods=['POST'])
 def my_test_endpoint():
     input_json = request.get_json(force=True)
@@ -36,28 +37,26 @@ def my_test_endpoint():
     print(lng)
     print(userId)
     boop = Firebase()
-    boop.addEntry(lat,lng,userId)
+    boop.addEntry(lat, lng, userId)
     return render_template('home.html')
+
 
 @app.route('/get/traffic', methods=['POST'])
 def my_data():
     base = Firebase()
-    print(request.data)
-    data = [(41.835461, -87.624957),
-     (41.835593, -87.624914),
-     (41.835673, -87.625193),
-     (41.835194, -87.625108),
-     (41.835082, -87.624893),
-     (41.835082, -87.624893),
-     (60.70546, -43.810708),
-     (90.709179, -53.820574)]
+    input_json = request.get_json(force=True)
+    data = []
+    for i in input_json:
+        data.append((i["lat"], i["lng"]))
+    #print(data)
     res = []
     for i in range(len(data)):
+        print(base.getTraffic(data[i]))
         if i%5 == 0:
             res.append(base.getTraffic(data[i]))
-        #if i%5 != 0 and i == len(data)-1:
-            #res.append(base.getTraffic((data[i])))
-
+        if i%5 != 0 and i == len(data)-1:
+            res.append(base.getTraffic((data[i])))
+    #print(res)
     total = sum(res)
     traffic = total/len(res)
     return jsonify({'traffic': traffic})
@@ -99,3 +98,6 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
