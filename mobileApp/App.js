@@ -7,6 +7,8 @@
 import React, { Component } from 'react';
 import RNPlaces from 'react-native-google-places';
 import MapView from "react-native-maps";
+import uuid from "uuid/v5";
+
 import {
   StyleSheet,
   Text,
@@ -50,7 +52,7 @@ export default class App extends Component {
   })
 
   _route = () => {
-      getDirections({lat: 41, lng: -81}, this.getDestLatLong())
+      getDirections({lat: 41.7, lng: -87.3}, this.getDestLatLong())
         .then((data) => {
             console.log(data.routes);
             this.setState({coords: getPolyLines(data.routes)})
