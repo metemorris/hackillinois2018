@@ -66,14 +66,33 @@ export default class App extends Component {
             style={{
               backgroundColor:"#fff",
               padding:15,
-              width:100
+              width:"80%",
+              bottom:60,
+              position: "absolute",
+              borderRadius:15,
+              shadowColor: "#222",
+              shadowOpacity: 0.35,
+              shadowRadius: 5,
+              shadowOffset: {width:1, height:1}
 
             }}
           />
-          <Button 
-            title = {"Directions"}
-            onPress = {this._route}
-          />
+          <View 
+          style={{
+              bottom:10,
+              position:"absolute",
+              paddingHorizontal:5,
+              paddingVertical:5,
+              backgroundColor:"white",
+              borderRadius:50
+
+            }}>
+            <Button 
+              title = {"Directions"}
+              onPress = {this._route}
+              
+            />
+          </View>
       </View>
     );
   }
