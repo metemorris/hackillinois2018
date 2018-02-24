@@ -1,4 +1,3 @@
-
 import datetime
 from firebase import firebase
 import pysal
@@ -38,6 +37,13 @@ class Firebase:
         lat = (float(lat)/100000)-90
         long = (float(long)/100000)-180
         return (lat,long)
+
+    def addUser(self, lat, long):
+        lat = (lat+90)*10000
+        long = (long+180)*10000
+        user_id = str(int(lat))+'-'+str(int(long))
+        result = self.firebase.put(('/location'), user_id,data={'loc':user_id})
+
 
 # test
 boop = Firebase() # initialize the firebase
