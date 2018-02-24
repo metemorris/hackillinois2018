@@ -10,7 +10,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TextInput,
+  Button
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -20,8 +22,16 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      text:" Hello"
+    };
+  }
+  destChange = ( dest )=>{
+    this.setState({text:dest})
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -34,15 +44,21 @@ export default class App extends Component<Props> {
                   longitudeDelta:0.09,
               }}
           />
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+          <TextInput 
+            value = {this.state.text}
+            onChangeText={this.destChange}
+            style={{
+              backgroundColor:"#fff",
+              padding:15,
+              width:100
+
+            }}
+          />
+          <Button 
+            title = {"What did I type"}
+            onPress = {()=>alert(this.state.text)}
+          />
+          
       </View>
     );
   }
