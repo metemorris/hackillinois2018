@@ -1,3 +1,4 @@
+import datetime
 from firebase import firebase
 class Firebase:
     DATABASE_URL = "https://hackill-b8ec1.firebaseio.com/"
@@ -15,14 +16,16 @@ class Firebase:
         else:
             return False
 
-    def addUser(self, lat, long):
+    def addEntry(self, lat, long):
         lat = (lat+90)*10000
         long = (long+180)*10000
         user_id = str(int(lat))+'-'+str(int(long))
-        result = self.firebase.put(('/location'), user_id,data={'loc':user_id})
+        dt = datetime.datetime.now()
+        self.firebase.put('/location', user_id, data={'loc': user_id})
+        self.firebase.post(str(dt.year)+'/'+str(dt.month)+'/'+str(dt.day)+'/'+str(dt.hour)+'/'+user_id,
+                           data={'lat': lat, 'long': long})
 
 
-# test
-boop = Firebase() # initialize the firebase
+boop = Firebase()
 boop.setUsers()
-boop.addUser(76.3,-77)
+boop.addEntry(76.3, -77)
