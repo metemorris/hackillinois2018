@@ -15,6 +15,14 @@ class Firebase:
         else:
             return False
 
+    def addUser(self, lat, long):
+        lat = (lat+90)*10000
+        long = (long+180)*10000
+        user_id = str(lat)+'-'+str(long)
+        result = self.firebase.put(('/location'), 'user_id',data={'loc':user_id})
+
+
 # test
 boop = Firebase() # initialize the firebase
-boop.setUsers() 
+boop.setUsers()
+boop.addUser(766.3,-747)
