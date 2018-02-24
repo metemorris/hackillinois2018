@@ -35,9 +35,17 @@ export default class App extends Component {
   destChange = (dest) =>{
     this.setState({text:dest})
   }
-
+  getLatLong = () =>{
+    //get lat and long of string 
+    if(this.state.text == "Home"){
+      return {lat: 41.53206, lng: -81.58992};
+    }
+    else{
+      return {lat: 42.53206, lng: -84.58992}
+    }
+  }
   _route = () => {
-      getDirections({lat: 41.43206, lng: -81.38992}, {lat: 41.53206, lng: -81.58992})
+      getDirections({lat: 41.43206, lng: -81.38992}, this.getLatLong())
         .then((data) => {
             console.log(data.routes);
             this.setState({coords: getPolyLines(data.routes)})
