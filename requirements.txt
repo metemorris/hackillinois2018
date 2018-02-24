@@ -3,7 +3,7 @@
 # ----------------------
 flask
 python-firebase
-
+pysal
 
 # ----------------------
 # Testing
