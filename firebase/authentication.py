@@ -18,11 +18,11 @@ class Firebase:
     def addUser(self, lat, long):
         lat = (lat+90)*10000
         long = (long+180)*10000
-        user_id = str(lat)+'-'+str(long)
-        result = self.firebase.put(('/location'), 'user_id',data={'loc':user_id})
+        user_id = str(int(lat))+'-'+str(int(long))
+        result = self.firebase.put(('/location'), user_id,data={'loc':user_id})
 
 
 # test
 boop = Firebase() # initialize the firebase
 boop.setUsers()
-boop.addUser(766.3,-747)
+boop.addUser(76.3,-77)
