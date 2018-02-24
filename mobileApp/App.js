@@ -34,7 +34,6 @@ export default class App extends Component {
   }
 
   _generateHeatMap = () => {
-      const uri = '../heatView.html';
       return <WebView
           pointerEvents="none"
           style={{opacity: 0.2}}
