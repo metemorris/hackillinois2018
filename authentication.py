@@ -21,7 +21,7 @@ class Firebase:
         if self.isUserActive(user_id):
             self.deleteTimeShit(user_id)
             self.deleteLocation(self.getPastLoc(user_id))
-
+            self.deleteUser(user_id)
         self.setUser(user_id,lat_long_key)
         self.firebase.put('/location/'+lat_long_key, user_id, data={'loc': user_id})
         self.firebase.post(str(dt.year)+'/'+str(dt.month)+'/'+str(dt.day)+'/'+str(dt.hour)+'/'+user_id,
