@@ -5,23 +5,17 @@
  */
 
 import React, { Component } from 'react';
+import RNPlaces from 'react-native-google-places';
 import MapView from "react-native-maps";
 import {
-  Platform,
   StyleSheet,
   Text,
+    TouchableWithoutFeedback,
   View,
   TextInput,
   Button
 } from 'react-native';
 import {getDirections, getPolyLines} from "./apis/maps";
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 export default class App extends Component {
   constructor(props){
@@ -68,38 +62,35 @@ export default class App extends Component {
                   strokeWidth={2}
                   strokeColor="red"/>
           </MapView>
-          <TextInput 
-            value = {this.state.text}
-            onChangeText={this.destChange}
-            style={{
-              backgroundColor:"#fff",
-              padding:15,
-              width:"80%",
-              bottom:60,
-              position: "absolute",
-              borderRadius:15,
-              shadowColor: "#222",
-              shadowOpacity: 0.35,
-              shadowRadius: 5,
-              shadowOffset: {width:1, height:1}
-
-            }}
-          />
+          <TouchableWithoutFeedback onPress={() => RNPlaces.openAutocompleteModal()}>
+              <View
+                  style={{
+                      backgroundColor:"#fff",
+                      padding:15,
+                      width:"80%",
+                      bottom:60,
+                      position: "absolute",
+                      borderRadius:15,
+                      shadowColor: "#222",
+                      shadowOpacity: 0.35,
+                      shadowRadius: 5,
+                      shadowOffset: {width:1, height:1}
+                  }}
+              />
+          </TouchableWithoutFeedback>
           <View 
-          style={{
-              bottom:10,
-              position:"absolute",
-              paddingHorizontal:5,
-              paddingVertical:5,
-              backgroundColor:"white",
-              borderRadius:50
-
+              style={{
+                  bottom:10,
+                  position:"absolute",
+                  paddingHorizontal:5,
+                  paddingVertical:5,
+                  backgroundColor:"white",
+                  borderRadius:50
             }}>
-            <Button 
-              title = {"Directions"}
-              onPress = {this._route}
-              
-            />
+                <Button
+                  title = {"Directions"}
+                  onPress = {this._route}
+                />
           </View>
       </View>
     );

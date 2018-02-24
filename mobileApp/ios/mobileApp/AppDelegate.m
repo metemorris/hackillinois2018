@@ -12,6 +12,9 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+@import GooglePlaces;
+@import GoogleMaps;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -31,6 +34,10 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [GMSPlacesClient provideAPIKey:@"AIzaSyCtd5UgLar9U4fEb_EUPmsXqOBZu1O3WKs"];
+  [GMSServices provideAPIKey:@"AIzaSyCtd5UgLar9U4fEb_EUPmsXqOBZu1O3WKs"];
+  
   return YES;
 }
 
