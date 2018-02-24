@@ -8,7 +8,7 @@ locations = [(41.835461, -87.624957),
              (60.70546, -43.810708),
              (90.709179, -53.820574)]
 
-users = ["1","2","3","4","5","6","7"]
+users = ["18","2","3","4","5","6","7"]
 
 for y,i in enumerate(locations):
     boop.addEntry(i[0], i[1],users[y])
@@ -23,6 +23,5 @@ data = [(41.835461, -87.624957),
      (60.70546, -43.810708),
      (90.709179, -53.820574)]
 
-for i in data:
-    print(boop.getTraffic(i))
+print(boop.getTraffic((41.835461, -87.624957)))
 print(boop.isUserActive("1"))

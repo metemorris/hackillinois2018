@@ -7,7 +7,7 @@ This file creates your application.
 """
 
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from authentication import Firebase
 
 app = Flask(__name__)
@@ -60,10 +60,8 @@ def my_data():
             #res.append(base.getTraffic((data[i])))
 
     total = sum(res)
-    print(total)
     traffic = total/len(res)
-    print(traffic)
-    return {'traffic': traffic}
+    return jsonify({'traffic': traffic})
 
 
 @app.route('/about/')

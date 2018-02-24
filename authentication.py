@@ -3,6 +3,7 @@ from firebase import firebase
 import pysal
 from pysal.cg.kdtree import KDTree
 
+
 class Firebase:
     DATABASE_URL = "https://hackill-b8ec1.firebaseio.com/"
 
@@ -31,21 +32,27 @@ class Firebase:
         locations = []
         for i in locations_result:
             locations.append(self.decryptLocation(i))
+        #print(locations)
         tree = KDTree(locations, distance_metric='Arc', radius=pysal.cg.RADIUS_EARTH_MILES)
 
         # get all points within 1 mile of 'current_point'
         indices = tree.query_ball_point(current_point, 5)
+
         count = 0
         dt = datetime.datetime.now()
         year = dt.year
         month = dt.month
         day = dt.day
         hour = dt.hour
-        result = self.firebase.get(str(year) +'/'+str(month)+'/'+str(day)+'/'+str(hour), None)
-        if result == None:
-            return 0
-        else:
-            return len(result)
+
+        userid = []
+        for i in indices:
+            key = self.encryptLocation(locations[i])
+            userId = list(locations_result[key].keys())[0]
+            result = self.firebase.get(str(year) +'/'+str(month)+'/'+str(day)+'/'+str(hour) + '/' +userId, None)
+            if result != 0:
+                count += 1
+        return count
 
     def decryptLocation(self,user_id):
         lolz = user_id.split("-")
@@ -54,6 +61,12 @@ class Firebase:
         lat = (float(lat)/100000)-90
         long = (float(long)/100000)-180
         return (lat,long)
+
+    def encryptLocation(self,latLong):
+        lat,long = latLong[0],latLong[1]
+        lat = (lat + 90) * 100000
+        long = (long + 180) * 100000
+        return str(int(lat)) + '-' + str(int(long))
 
     def getSomeShit(self):
         dt = datetime.datetime.now()
