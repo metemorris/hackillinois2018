@@ -24,7 +24,9 @@ export default class App extends Component {
     this.state = {
         dest: {name: "Enter Destination"},
         text:" Hello",
-        coords: []
+        coords: [],
+        latitude:0,
+        longitude:0
     };
   }
 
@@ -32,27 +34,30 @@ export default class App extends Component {
     this.setState({text: dest})
   }
 
-  getPosition = () =>{
-    navigator.geolocation.getCurrentPosition(
+  componentDidMount() {
+    this.watchId = navigator.geolocation.watchPosition(
       (position) => {
+        console.log(position);
         this.setState({
-          cLat: position.coords.latitude,
-          cLong: position.coords.longitude,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
           error: null,
         });
       },
       (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 20 },
     );
   }
-
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  }
   getDestLatLong = () => ({
       lat: this.state.dest.latitude,
       lng: this.state.dest.longitude,
   })
 
   _route = () => {
-      getDirections({lat: 41.7, lng: -87.3}, this.getDestLatLong())
+      getDirections({lat: this.state.latitude, lng:this.state.longitude}, this.getDestLatLong())
         .then((data) => {
             console.log(data.routes);
             this.setState({coords: getPolyLines(data.routes)})
@@ -72,11 +77,11 @@ export default class App extends Component {
       <View style={styles.container}>
           <MapView
               style={StyleSheet.absoluteFill}
-              initialRegion={{
-                  latitude: 41.43206,
-                  longitude: -81.38992,
-                  latitudeDelta: 0.81,
-                  longitudeDelta: 0.81,
+              region={{
+                  latitude: this.state.latitude,
+                  longitude: this.state.longitude,
+                  latitudeDelta: 0.1,
+                  longitudeDelta: 0.11,
               }}>
               <MapView.Polyline
                   coordinates={this.state.coords}
