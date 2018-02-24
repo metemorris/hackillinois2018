@@ -42,8 +42,7 @@ def my_test_endpoint():
 @app.route('/get/traffic', methods=['POST'])
 def my_data():
     base = Firebase()
-    #data = request.get_data()
-    #print(data)
+    print(request.data)
     data = [(41.835461, -87.624957),
      (41.835593, -87.624914),
      (41.835673, -87.625193),

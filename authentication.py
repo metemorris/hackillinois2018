@@ -103,6 +103,9 @@ class Firebase:
     def setUser(self,userId,locKey):
         self.firebase.put('user/' + userId,locKey,data={'boop':'boop'})
 
+    def deleteUser(self,userId):
+        self.firebase.delete('user/' + userId,None)
+
     def getPastLoc(self,userId):
         result = self.firebase.get('user/'+userId, None)
         return list(result.keys())[0]
