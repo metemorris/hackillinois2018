@@ -55,10 +55,9 @@ export default class App extends Component {
             }}
           />
           <Button 
-            title = {"What did I type"}
-            onPress = {()=>alert(this.state.text)}
+            title = {"Directions"}
+            onPress = {()=> alert(this.state.text) }
           />
-          
       </View>
     );
   }
