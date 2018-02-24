@@ -14,6 +14,7 @@ import {
   TextInput,
   Button
 } from 'react-native';
+import {getDirections} from "./apis/maps";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -29,9 +30,16 @@ export default class App extends Component {
       text:" Hello"
     };
   }
+
   destChange = ( dest )=>{
     this.setState({text:dest})
   }
+
+  _route = () => {
+      getDirections({lat: 41.43206, lng: -81.38992}, {lat: 41.53206, lng: -81.58992})
+        .then((data) => console.log(JSON.stringify(data)))
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -56,7 +64,7 @@ export default class App extends Component {
           />
           <Button 
             title = {"Directions"}
-            onPress = {()=> alert(this.state.text) }
+            onPress = {this._route}
           />
       </View>
     );
