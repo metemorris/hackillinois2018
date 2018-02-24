@@ -8,6 +8,7 @@ This file creates your application.
 
 import os
 from flask import Flask, render_template, request, redirect, url_for
+from authentication import Firebase
 
 app = Flask(__name__)
 
@@ -28,7 +29,41 @@ def my_test_endpoint():
     input_json = request.get_json(force=True)
     # force=True, above, is necessary if another developer
     # forgot to set the MIME type to 'application/json'
+    lat = float(input_json['lat'])
+    lng = float(input_json['lng'])
+    userId = str(input_json['uuid'])
+    print(lat)
+    print(lng)
+    print(userId)
+    boop = Firebase()
+    boop.addEntry(lat,lng,userId)
     return render_template('home.html')
+
+@app.route('/get/traffic', methods=['POST'])
+def my_data():
+    base = Firebase()
+    #data = request.get_data()
+    #print(data)
+    data = [(41.835461, -87.624957),
+     (41.835593, -87.624914),
+     (41.835673, -87.625193),
+     (41.835194, -87.625108),
+     (41.835082, -87.624893),
+     (41.835082, -87.624893),
+     (60.70546, -43.810708),
+     (90.709179, -53.820574)]
+    res = []
+    for i in range(len(data)):
+        if i%5 == 0:
+            res.append(base.getTraffic(data[i]))
+        #if i%5 != 0 and i == len(data)-1:
+            #res.append(base.getTraffic((data[i])))
+
+    total = sum(res)
+    print(total)
+    traffic = total/len(res)
+    print(traffic)
+    return {'traffic': traffic}
 
 
 @app.route('/about/')
