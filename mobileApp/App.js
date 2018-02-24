@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import RNPlaces from 'react-native-google-places';
 import MapView from "react-native-maps";
-import uuid from "uuid/v5";
+import uuid from "uuid/v4";
 
 import {
   StyleSheet,
@@ -26,7 +26,8 @@ export default class App extends Component {
         text:" Hello",
         coords: [],
         latitude:0,
-        longitude:0
+        longitude:0,
+        uuid: "None"
     };
   }
 
@@ -34,10 +35,29 @@ export default class App extends Component {
     this.setState({text: dest})
   }
 
+  _updateLocation = (loc, uuid) => {
+      const body = {
+          lat: loc.lat,
+          lng: loc.lng,
+          uuid: uuid
+      }
+      return fetch("https://hackil18.herokuapp.com/update", {
+          body: JSON.stringify(body),
+          method: 'POST'
+      }).catch((err) => console.log(err))
+  }
+
+  componentWillMount() {
+      this.setState({uuid: uuid()});
+  }
+
   componentDidMount() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
-        console.log(position);
+        this._updateLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+        }, this.state.uuid);
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -48,9 +68,11 @@ export default class App extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 20 },
     );
   }
+
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
   }
+
   getDestLatLong = () => ({
       lat: this.state.dest.latitude,
       lng: this.state.dest.longitude,
