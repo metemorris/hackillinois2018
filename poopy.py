@@ -20,11 +20,11 @@ locations = [(41.835461, -87.624957),
 
 users = ["18","2","3","4","5","6","7"]
 
-for y,i in enumerate(locations):
-    boop.addIncident(i[0], i[1],"trash")
+#for y,i in enumerate(locations):
+    #boop.addIncident(i[0], i[1],"trash")
 # test
 
-print(boop.getIncidents((41.835461, -87.624957)))
+#print(boop.getIncidents((41.835461, -87.624957)))
 data = [(41.835461, -87.624957),
      (41.835593, -87.624914),
      (41.835673, -87.625193),
@@ -34,5 +34,10 @@ data = [(41.835461, -87.624957),
      (60.70546, -43.810708),
      (90.709179, -53.820574)]
 
-print(boop.getTraffic((60.70546, -43.810708)))
-print(boop.isUserActive("1"))
+#print(boop.getTraffic((60.70546, -43.810708)))
+#print(boop.isUserActive("1"))
+print(boop.decryptLocation("12733233-5796878"))
+
+lat = 40.115421
+lng = -88.24338
+print(boop.getCrazyHeat(lat,lng))

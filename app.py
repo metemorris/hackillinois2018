@@ -52,6 +52,16 @@ def my_update_endpoint():
     boop.addIncident(lat, lng, userId)
     return render_template('home.html')
 
+@app.route('/get/heatmap', methods=['POST'])
+def my_incidentheatmap_endpoint():
+    input_json = request.get_json(force=True)
+    # force=True, above, is necessary if another developer
+    # forgot to set the MIME type to 'application/json'
+    lat = float(input_json['lat'])
+    lng = float(input_json['lng'])
+    boop = Firebase()
+    result = boop.getCrazyHeat(lat,lng)
+    return jsonify({"heatmap":result})
 
 
 @app.route('/get/traffic', methods=['POST'])

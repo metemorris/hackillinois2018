@@ -1,4 +1,4 @@
-import datetime
+import datetime, random
 from firebase import firebase
 import pysal
 from pysal.cg.kdtree import KDTree
@@ -83,18 +83,78 @@ class Firebase:
 
         for i in indices:
             key = self.encryptLocation(locations[i])
-            userId = list(locations_result[key].keys())[0]
-            result = self.firebase.get(str(year) +'/'+str(month)+'/'+str(day)+'/'+str(hour) + '/' +userId, None)
-            if result != 0:
-                count += 1
+            if key in locations_result:
+                if isinstance(locations_result[key],dict):
+                    userId = list(locations_result[key].keys())[0]
+                    result = self.firebase.get(str(year) +'/'+str(month)+'/'+str(day)+'/'+str(hour) + '/' +userId, None)
+                    if result != 0:
+                        count += 1
         return count
+
+    def getCrazyHeat(self,lat,lng):
+        current_point = (lat,lng)
+        locations_result = self.firebase.get("location", None)
+        # print(locations_result)
+        locations = []
+        for i in locations_result:
+            locations.append(self.decryptLocation(i))
+        # print(locations)
+        tree = KDTree(locations, distance_metric='Arc', radius=pysal.cg.RADIUS_EARTH_MILES)
+        # get all points within 1 mile of 'current_point'
+        indices = tree.query_ball_point(current_point, 40)
+        # print(indices)
+        count = 0
+        dt = datetime.datetime.now()
+        year = dt.year
+        month = dt.month
+        day = dt.day
+        hour = dt.hour
+        userid = []
+
+        locationDict1 = dict()
+        locationDict2 = dict()
+        locationDict3 = dict()
+        locationDict4 = dict()
+        locationArr = []
+        if len(indices) != 0:
+
+            loc1 = random.randrange(len(indices))
+            loc2 = random.randrange(len(indices))
+            loc3 = random.randrange(len(indices))
+            loc4 = random.randrange(len(indices))
+
+            key1 = locations[indices[loc1]]
+            key2 = locations[indices[loc2]]
+            key3 = locations[indices[loc3]]
+            key4 = locations[indices[loc4]]
+
+            locationDict1['lat'] = key1[0]
+            locationDict1['lng'] = key1[1]
+            locationDict1['heat'] = self.getTraffic(key1)
+
+            locationDict2['lat'] = key2[0]
+            locationDict2['lng'] = key2[1]
+            locationDict2['heat'] = self.getTraffic(key2)
+
+            locationDict3['lat'] = key3[0]
+            locationDict3['lng'] = key3[1]
+            locationDict3['heat'] = self.getTraffic(key3)
+
+            locationDict4['lat'] = key4[0]
+            locationDict4['lng'] = key4[1]
+            locationDict4['heat'] = self.getTraffic(key4)
+            locationArr.append(locationDict1)
+            locationArr.append(locationDict2)
+            locationArr.append(locationDict3)
+            locationArr.append(locationDict4)
+        return locationArr
 
     def decryptLocation(self,user_id):
         lolz = user_id.split("-")
         lat = lolz[0]
         long = lolz[1]
-        lat = (float(lat)/100000)-90
-        long = (float(long)/100000)-180
+        lat = round((float(lat)/100000)-90,6)
+        long = round((float(long)/100000)-180,6)
         return (lat,long)
 
     def encryptLocation(self,latLong):
