@@ -32,7 +32,8 @@ export default class App extends Component {
         coords: [],
         latitude: 0,
         longitude: 0,
-        uuid: "None"
+        incidents:null,
+        uuid: "None"    
     };
   }
 
@@ -45,11 +46,35 @@ export default class App extends Component {
           javaScriptEnabled
       />;
   }
-
+  _getIncidents = () => {
+    const body = {
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+    }
+    this.state.incidents = fetch("https://hackil18.herokuapp.com/get/incident", {
+        body: JSON.stringify(body),
+        method: 'POST'
+    })
+    .then((res)=>res.json())
+    .then((res)=>{
+        alert(JSON.stringify(res));
+        this.setState({incidents: res});
+        
+    })
+    .catch((err) => console.log(err))
+    
+}
   destChange = (dest) =>{
     this.setState({text: dest})
   }
-
+ _placeIncident = (incidents)=>{
+        return incidents.map((incident)=>{
+            return <Marker
+            coordinate={{latitude: incident.lat, longitude: incident.lng}}
+            image={locIcon}
+        />;
+        });
+  }
   _updateLocation = (loc, uuid) => {
       const body = {
           lat: loc.lat,
@@ -64,9 +89,11 @@ export default class App extends Component {
 
   componentWillMount() {
       this.setState({uuid: uuid()});
+      
   }
 
   componentDidMount() {
+    this._getIncidents();
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
         this._updateLocation({
@@ -168,7 +195,7 @@ export default class App extends Component {
     }
     
   _thief = () => {
-        alert("Crime alert sent");
+        alert(JSON.stringify(this.state.incidents));
         const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -215,6 +242,7 @@ export default class App extends Component {
                   coordinate={{latitude: this.state.latitude, longitude: this.state.longitude}}
                   image={locIcon}
               />
+
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
               {this._generateHeatMap()}
