@@ -4,6 +4,7 @@
 flask
 python-firebase
 pysal
+pyodbc
 
 # ----------------------
 # Testing
