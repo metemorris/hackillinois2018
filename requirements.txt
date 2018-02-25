@@ -1,0 +1,19 @@
+# ----------------------
+# Flask
+# ----------------------
+flask
+python-firebase
+pysal
+pyodbc
+
+# ----------------------
+# Testing
+# ----------------------
+mock
+
+
+# ----------------------
+# Production Server
+# ----------------------
+gevent
+gunicorn
