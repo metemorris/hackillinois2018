@@ -1,15 +1,20 @@
+import React from "react";
+import {Dimensions} from "react-native";
+
 export const runHeatMap = (coords, lat, lng) => {
     var max = 0;
-    var width = 1080;
-    var height = 1920;
-    const LAT_ASC = 0.013;
-    const LNG_ASC = 0.022;
+    var width = Dimensions.get('window').width * 2.7;
+    var height = Dimensions.get('window').height * 2.8;
+    console.log(width);
+    console.log(height);
+    const LAT_ASC = 0.024;
+    const LNG_ASC = 0.023;
     const points = coords.map((coord, idx) => {
         var val = Math.floor(Math.random()*100);
         max = Math.max(max, val);
         return {
-            x: width/2 + Math.floor((coord.lat-lat)*width/LAT_ASC),
-            y: height/2 + Math.floor((coord.lng-lng)*height/LNG_ASC),
+            x: Math.floor(width/2 + (coord.lng-lng)*width/LNG_ASC),
+            y: Math.floor(height/2 + (lat - coord.lat)*height/LAT_ASC),
             value: val
         }
     });
