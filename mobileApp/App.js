@@ -35,7 +35,7 @@ export default class App extends Component {
     super(props);
     this.state = {
         dest: {name: "Enter Destination"},
-        text:" Hello",
+        heat: false,
         coords: [],
         fcoords: [],
         fast: false,
@@ -51,10 +51,10 @@ export default class App extends Component {
     };
   }
 
-  _getHeatMapPoints = () => {
+    _getHeatMapPoints = (lat, lng) => {
       const body = {
-          lat: this.state.latitude,
-          lng: this.state.longitude,
+          lat: lat ? lat : this.state.latitude,
+          lng: lng ? lng : this.state.longitude,
       }
       fetch("https://hackilli.herokuapp.com/get/nearby", {
           body: JSON.stringify(body),
@@ -299,6 +299,7 @@ export default class App extends Component {
 
   render() {
     return (
+        <TouchableWithoutFeedback onLongPress={() => this.setState({heat: !this.state.heat})}>
       <View style={styles.container}>
           <MapView
               style={StyleSheet.absoluteFill}
@@ -337,7 +338,7 @@ export default class App extends Component {
               />
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
-              {this.state.heatmap ? this._generateHeatMap(this.state.incidents) : <View/>}
+              {this.state.heatmap && this.state.heat ? this._generateHeatMap(this.state.heatmap) : <View/>}
           </View>
           <TouchableWithoutFeedback onPress={this._onAutocomplete}>
               <View
@@ -457,7 +458,7 @@ export default class App extends Component {
                   backgroundColor: "white",
                   borderRadius: 100
             }}>
-                <TouchableOpacity
+              <TouchableOpacity
                 style={{
                     justifyContent: "center",
                     width:35,
@@ -504,7 +505,6 @@ export default class App extends Component {
                 />
                 </TouchableOpacity>
           </View>
-
           <View 
               style={{
                   bottom: "40%",
@@ -574,7 +574,7 @@ export default class App extends Component {
               <Switch value={this.state.fast} onValueChange={() => this.setState({fast: !this.state.fast})}/>
           </View>
       </View>
-      
+        </TouchableWithoutFeedback>
     );
   }
 }
