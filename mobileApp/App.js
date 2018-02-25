@@ -168,8 +168,6 @@ export default class App extends Component {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
         }, this.state.uuid);
-        this._getIncidents();
-        this._getHeatMapPoints();
         times += 1;
         this.setState({
             myLat: position.coords.latitude,
@@ -177,6 +175,8 @@ export default class App extends Component {
             error: null,
         });
         if(times <= 2) {
+            this._getHeatMapPoints();
+            this._getIncidents();
             this.setState({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
@@ -215,7 +215,8 @@ export default class App extends Component {
         return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
-        }).catch((err) => console.log(err))
+        }).then(() => this._getIncidents())
+            .catch((err) => console.log(err))
     }
     
   _roadwork = () => {
@@ -228,7 +229,8 @@ export default class App extends Component {
       return fetch("https://hackilli.herokuapp.com/updateIncident", {
       body: JSON.stringify(body),
       method: 'POST'
-      }).catch((err) => console.log(err))
+      }).then(() => this._getIncidents())
+          .catch((err) => console.log(err))
     }
 
   _event = () => {
@@ -241,7 +243,8 @@ export default class App extends Component {
         return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
-        }).catch((err) => console.log(err))
+        }).then(() => this._getIncidents())
+            .catch((err) => console.log(err))
     }
 
   _warning = () => {
@@ -254,7 +257,8 @@ export default class App extends Component {
         return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
-        }).catch((err) => console.log(err))
+        }).then(() => this._getIncidents())
+            .catch((err) => console.log(err))
     }
 
     _help = () => {
@@ -267,7 +271,8 @@ export default class App extends Component {
       return fetch("https://hackilli.herokuapp.com/updateIncident", {
       body: JSON.stringify(body),
       method: 'POST'
-      }).catch((err) => console.log(err))
+      }).then(() => this._getIncidents())
+          .catch((err) => console.log(err))
     }
     
     _thief = () => {
@@ -278,9 +283,10 @@ export default class App extends Component {
             type: "crime"
         }
         return fetch("https://hackilli.herokuapp.com/updateIncident", {
-        body: JSON.stringify(body),
-        method: 'POST'
-        }).catch((err) => console.log(err))
+            body: JSON.stringify(body),
+            method: 'POST'
+        }).then(() => this._getIncidents())
+            .catch((err) => console.log(err))
     }
 
   _onAutocomplete = ()  => {
@@ -296,14 +302,6 @@ export default class App extends Component {
       <View style={styles.container}>
           <MapView
               style={StyleSheet.absoluteFill}
-              onRegionChange={(region) => {
-                  this.setState({
-                      latitude: region.latitude,
-                      longitude: region.longitude,
-                      latitudeDelta: region.latitudeDelta,
-                      longitudeDelta: region.longitudeDelta,
-                  })
-              }}
               region={{
                   latitude: this.state.latitude,
                   longitude: this.state.longitude,
