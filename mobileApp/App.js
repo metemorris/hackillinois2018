@@ -31,9 +31,10 @@ export default class App extends Component {
         dest: {name: "Enter Destination"},
         text:" Hello",
         coords: [],
+        heatmap: [],
         latitude: 0,
         longitude: 0,
-        incidents:null,
+        incidents: [],
         uuid: "None"    
     };
   }
@@ -55,7 +56,7 @@ export default class App extends Component {
   }
 
   _generateHeatMap = () => {
-      const script = runHeatMap([]);
+      const script = runHeatMap(this.state.heatmap, this.state.latitude, this.state.longitude);
       return <WebView
                   pointerEvents="none"
                   style={{opacity: 0.2}}
@@ -77,7 +78,6 @@ export default class App extends Component {
         .then((res)=> res.json())
         .then((res) => {
             console.log(res);
-            alert(JSON.stringify(res));
             this.setState({incidents: res.incidents});
         })
         .catch((err) => console.log(err))
@@ -117,6 +117,7 @@ export default class App extends Component {
             lng: position.coords.longitude,
         }, this.state.uuid);
         this._getIncidents();
+        this._getHeatMapPoints();
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -146,7 +147,6 @@ export default class App extends Component {
   }
 
   _thrash = () => {
-      alert("Trash alert sent");
       const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -156,11 +156,9 @@ export default class App extends Component {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
-        
     }
     
   _roadwork = () => {
-    alert("Construction alert sent");
     const body = {
       lat: this.state.latitude,
       lng: this.state.longitude,
@@ -186,7 +184,6 @@ export default class App extends Component {
     }
 
   _warning = () => {
-        alert("Road warning alert sent");
         const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -199,7 +196,6 @@ export default class App extends Component {
     }
 
   _help = () => {
-      alert("Food alert sent");
     const body = {
       lat: this.state.latitude,
       lng: this.state.longitude,
@@ -212,7 +208,6 @@ export default class App extends Component {
     }
     
   _thief = () => {
-        alert(JSON.stringify(this.state.incidents));
         const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -263,7 +258,7 @@ export default class App extends Component {
 
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
-              {this._generateHeatMap(this.state.incidents)}
+              {this.state.heatmap ? this._generateHeatMap(this.state.incidents) : <View/>}
           </View>
           <TouchableWithoutFeedback onPress={this._onAutocomplete}>
               <View

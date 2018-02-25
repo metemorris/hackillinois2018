@@ -1,20 +1,18 @@
-export const runHeatMap = (points) => {
-    var points = [];
+export const runHeatMap = (coords, lat, lng) => {
     var max = 0;
     var width = 1080;
     var height = 1920;
-    var len = 200;
-
-    while (len--) {
-        var val = Math.floor(Math.random()*100);
+    const LAT_ASC = 0.11;
+    const LNG_ASC = 0.22;
+    const points = coords.map((coord, idx) => {
+        var val = Math.floor(Math.abs(coord[0].lat));
         max = Math.max(max, val);
-        var point = {
-            x: Math.floor(Math.random()*width),
-            y: Math.floor(Math.random()*height),
+        return {
+            x: width/2 + Math.floor((coord.lat-lat)*width*LAT_ASC),
+            y: height/2 + Math.floor((coord.lng-lng)*height*LNG_ASC),
             value: val
-        };
-        points.push(point);
-    }
+        }
+    });
 
     return `
     var heatmapInstance = h337.create({
