@@ -199,9 +199,9 @@ export default class App extends Component {
 
   _route = () => {
       getDirections({lat: this.state.myLat, lng:this.state.myLng}, this.getDestLatLong())
-        .then(({good, fast}) => {
-            console.log(good.routes);
-            getPolyLines(data.routes).then((data) => this.setState({coords: data}))
+        .then((data) => {
+            console.log(data.routes);
+            getPolyLines(data.routes).then(({good, fast}) => this.setState({coords: good, fcoords: fast}))
         })
   }
 

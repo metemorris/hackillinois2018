@@ -37,7 +37,7 @@ const getPolyLines = (routes) => {
                 }
             }
             let points = Polyline.decode(routes[idx].overview_polyline.points);
-            let points2 = Polyline.decode(routes[0].overview_polyline.points);
+            let points2 = Polyline.decode(routes[routes.length-1].overview_polyline.points);
             let good = points.map((point) => {
                 return  {
                     latitude : point[0],
