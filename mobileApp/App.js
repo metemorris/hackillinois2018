@@ -94,50 +94,43 @@ export default class App extends Component {
 
     _placeIncident = (incidents)=>{
         return incidents.map((incident, index)=>{
-
             switch(incident.type) {
                 case "construction":
                 return (
                     <Marker key={index}
                         coordinate={{latitude: incident.lat, longitude: incident.lng}}
-                        image= {locIcon}
+                        image= {constIcon}
                     />);
-                break;
                 case "crime":
                     return (
                         <Marker key={index}
                             coordinate={{latitude: incident.lat, longitude: incident.lng}}
                             image={crimeIcon}
                         />);
-                break;
                 case "event":
                     return (
                         <Marker key={index}
                             coordinate={{latitude: incident.lat, longitude: incident.lng}}
                             image={eventIcon}
                             />);
-                break;
                 case "food":
                     return (
                         <Marker key={index}
                             coordinate={{latitude: incident.lat, longitude: incident.lng}}
                             image={foodIcon}
                         />);
-                break;
                 case "hazard":
                     return (
                         <Marker key={index}
                             coordinate={{latitude: incident.lat, longitude: incident.lng}}
                             image={hazardIcon}
                         />);
-                break;
                 case "trash":
                     return (
                         <Marker key={index}
                             coordinate={{latitude: incident.lat, longitude: incident.lng}}
                             image={trashIcon}
                         />);
-                break;
                 default:
                 return (
                     <Marker key={index}
@@ -202,6 +195,7 @@ export default class App extends Component {
   }
 
   _thrash = () => {
+      alert("Contamination alert sent");
       const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -214,6 +208,7 @@ export default class App extends Component {
     }
     
   _roadwork = () => {
+      alert("Construction alert sent");
     const body = {
       lat: this.state.latitude,
       lng: this.state.longitude,
@@ -239,6 +234,7 @@ export default class App extends Component {
     }
 
   _warning = () => {
+       alert("Caution alert sent");
         const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
@@ -251,6 +247,7 @@ export default class App extends Component {
     }
 
   _help = () => {
+      alert("Free common goods alert sent");
     const body = {
       lat: this.state.latitude,
       lng: this.state.longitude,
@@ -263,6 +260,7 @@ export default class App extends Component {
     }
     
   _thief = () => {
+        alert("Crime alert sent");
         const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
