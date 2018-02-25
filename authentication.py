@@ -2,7 +2,7 @@ import datetime, random
 from firebase import firebase
 import pysal
 from pysal.cg.kdtree import KDTree
-
+import pyodbc
 
 class Firebase:
     DATABASE_URL = "https://hackill-b8ec1.firebaseio.com/"
@@ -26,6 +26,19 @@ class Firebase:
         self.firebase.put('/location/'+lat_long_key, user_id, data={'loc': user_id})
         self.firebase.post(str(dt.year)+'/'+str(dt.month)+'/'+str(dt.day)+'/'+str(dt.hour)+'/'+user_id,
                            data={'lat': lat, 'long': long, 'locKey':lat_long_key})
+
+        server = 'walkablebiserver1.database.windows.net'
+        database = 'walkable'
+        username = 'walkable'
+        password = 'walkhere123!'
+        driver = '{ODBC Driver 13 for SQL Server}'
+        cnxn = pyodbc.connect(
+            'DRIVER=' + driver + ';PORT=1433;SERVER=' + server + ';PORT=1443;DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+        cursor = cnxn.cursor()
+        user_id = str(user_id)
+
+        cursor.execute("INSERT INTO traffic VALUES (?,?,?,?)",(user_id,lat,long,dt))
+        cnxn.commit()
 
     def getIncidents(self,current_point):
         incident_result = self.firebase.get("incident", None)
@@ -59,6 +72,16 @@ class Firebase:
         self.firebase.put('/incident/'+lat_long_key, type, data={'loc': type})
         self.firebase.post('/incidentType/'+type,
                            data={'lat': lat, 'long': long, 'locKey':lat_long_key, 'type': type})
+        server = 'walkablebiserver1.database.windows.net'
+        database = 'walkable'
+        username = 'walkable'
+        password = 'walkhere123!'
+        driver = '{ODBC Driver 13 for SQL Server}'
+        cnxn = pyodbc.connect(
+            'DRIVER=' + driver + ';PORT=1433;SERVER=' + server + ';PORT=1443;DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+        cursor = cnxn.cursor()
+        cursor.execute("INSERT INTO incident VALUES (?,?, ?,?)",(lat,long,type,dt))
+        cnxn.commit()
 
     def getTraffic(self,current_point):
         locations_result = self.firebase.get("location", None)
