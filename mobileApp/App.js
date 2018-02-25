@@ -245,7 +245,7 @@ export default class App extends Component {
     }
 
   _warning = () => {
-       alert("Caution alert sent");
+        alert("Caution alert sent");
         const body = {
             lat: this.state.myLat,
             lng: this.state.myLng,
@@ -257,7 +257,7 @@ export default class App extends Component {
         }).catch((err) => console.log(err))
     }
 
-  _help = () => {
+    _help = () => {
       alert("Free common goods alert sent");
       const body = {
           lat: this.state.myLat,
@@ -270,7 +270,7 @@ export default class App extends Component {
       }).catch((err) => console.log(err))
     }
     
-  _thief = () => {
+    _thief = () => {
         alert("Crime alert sent");
         const body = {
             lat: this.state.myLat,
@@ -281,7 +281,8 @@ export default class App extends Component {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
-}  
+    }
+
   _onAutocomplete = ()  => {
       RNPlaces.openAutocompleteModal()
           .then((data) => {
@@ -401,7 +402,6 @@ export default class App extends Component {
                   borderRadius: 100
             }}>
                 <TouchableOpacity
-                onPress = {this._route}
                 style={{
                     justifyContent: "center",
                     width:35,
@@ -431,7 +431,6 @@ export default class App extends Component {
                   borderRadius: 100
             }}>
                 <TouchableOpacity
-                onPress = {this._roadwork}
                 style={{
                     justifyContent: "center",
                     width:35,
@@ -461,7 +460,6 @@ export default class App extends Component {
                   borderRadius: 100
             }}>
                 <TouchableOpacity
-                onPress = {this._event}
                 style={{
                     justifyContent: "center",
                     width:35,
@@ -492,7 +490,6 @@ export default class App extends Component {
                   borderRadius: 100
             }}>
                 <TouchableOpacity
-                onPress = {this._route}
                 style={{
                     justifyContent: "center",
                     width:35,
@@ -530,14 +527,14 @@ export default class App extends Component {
                     height:35
                 }}
                 onPress={this._help}>
-                <Image
-                    style={{
-                        maxWidth:35,
-                        maxHeight: 35,
-                        resizeMode:"contain"
-                    }}
-                    source={require('./assets/heart.png')}
-                />
+                    <Image
+                        style={{
+                            maxWidth:35,
+                            maxHeight: 35,
+                            resizeMode:"contain"
+                        }}
+                        source={require('./assets/heart.png')}
+                    />
                 </TouchableOpacity>
           </View>
           <View 
@@ -553,21 +550,20 @@ export default class App extends Component {
                   borderRadius: 100
             }}>
                 <TouchableOpacity
-                onPress = {this._thief}
                 style={{
                     justifyContent: "center",
                     width:35,
                     height:35
                 }}
                 onPress={this._thief}>
-                <Image
-                    style={{
-                        maxWidth:35,
-                        maxHeight: 35,
-                        resizeMode:"contain"
-                    }}
-                    source={require('./assets/thief.png')}
-                />
+                    <Image
+                        style={{
+                            maxWidth:35,
+                            maxHeight: 35,
+                            resizeMode:"contain"
+                        }}
+                        source={require('./assets/thief.png')}
+                    />
                 </TouchableOpacity>
           </View>
           <View style={{
@@ -577,7 +573,7 @@ export default class App extends Component {
                   paddingVertical: 2,
                   backgroundColor: "white",
                   borderRadius: 50 }}>
-              <Switch onValueChange={() => this.setState({fast: !this.state.fast})}/>
+              <Switch value={this.state.fast} onValueChange={() => this.setState({fast: !this.state.fast})}/>
           </View>
       </View>
       
