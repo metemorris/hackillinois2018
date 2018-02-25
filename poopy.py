@@ -21,9 +21,10 @@ locations = [(41.835461, -87.624957),
 users = ["18","2","3","4","5","6","7"]
 
 for y,i in enumerate(locations):
-    boop.addEntry(i[0], i[1],users[y])
+    boop.addIncident(i[0], i[1],"trash")
 # test
 
+print(boop.getIncidents((41.835461, -87.624957)))
 data = [(41.835461, -87.624957),
      (41.835593, -87.624914),
      (41.835673, -87.625193),

@@ -74,6 +74,17 @@ def my_data():
     traffic = total/len(res)
     return jsonify({'traffic': traffic})
 
+@app.route('/get/incident', methods=['POST'])
+def my_data_event():
+    base = Firebase()
+    input_json = request.get_json(force=True)
+    data = []
+    for i in input_json:
+        data.append((i["lat"], i["lng"]))
+    res = base.getIncidents(data[0])
+
+    return jsonify({'incidents': res})
+
 
 @app.route('/about/')
 def about():

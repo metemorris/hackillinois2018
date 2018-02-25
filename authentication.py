@@ -39,10 +39,17 @@ class Firebase:
 
         # get all points within 1 mile of 'current_point'
         indices = tree.query_ball_point(current_point, 5)
-        print(indices)
-        userid = []
-        emoticons = {}
-        return 1
+        locationList = []
+        for i in indices:
+            key = self.encryptLocation(locations[i])
+            locationStuff = dict()
+            locationStuff['lat'] = locations[i][0]
+            locationStuff['lng'] = locations[i][1]
+            types = list(incident_result[key].keys())
+            locationStuff['type'] = types[0]
+            locationList.append(locationStuff)
+
+        return locationList
 
     def addIncident(self, lat, long,type):
         lat = (lat+90)*100000
