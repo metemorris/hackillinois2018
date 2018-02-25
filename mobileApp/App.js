@@ -46,35 +46,35 @@ export default class App extends Component {
           javaScriptEnabled
       />;
   }
+
   _getIncidents = () => {
-    const body = {
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-    }
-    this.state.incidents = fetch("https://hackil18.herokuapp.com/get/incident", {
-        body: JSON.stringify(body),
-        method: 'POST'
-    })
-    .then((res)=>res.json())
-    .then((res)=>{
-        alert(JSON.stringify(res));
-        this.setState({incidents: res});
-        
-    })
-    .catch((err) => console.log(err))
-    
-}
-  destChange = (dest) =>{
-    this.setState({text: dest})
+        const body = {
+            lat: 37.3, //this.state.latitude,
+            lng: -122//this.state.longitude,
+        }
+        fetch("https://hackil18.herokuapp.com/get/incident", {
+            body: JSON.stringify([body]),
+            method: 'POST'
+        })
+        .then((res)=> res.json())
+        .then((res) => {
+            console.log(res);
+            alert(JSON.stringify(res));
+            this.setState({incidents: res.incidents});
+        })
+        .catch((err) => console.log(err))
   }
- _placeIncident = (incidents)=>{
-        return incidents.map((incident)=>{
-            return <Marker
-            coordinate={{latitude: incident.lat, longitude: incident.lng}}
-            image={locIcon}
-        />;
+
+    _placeIncident = (incidents)=>{
+        return incidents.map((incident, index)=>{
+            return (
+                <Marker key={index}
+                    coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                    image={locIcon}
+            />);
         });
-  }
+    }
+
   _updateLocation = (loc, uuid) => {
       const body = {
           lat: loc.lat,
@@ -238,6 +238,7 @@ export default class App extends Component {
                       /> :
                       <View/>
               }
+              {this.state.incidents ? this._placeIncident(this.state.incidents) : <View/>}
               <Marker
                   coordinate={{latitude: this.state.latitude, longitude: this.state.longitude}}
                   image={locIcon}
@@ -245,7 +246,7 @@ export default class App extends Component {
 
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
-              {this._generateHeatMap()}
+              {this._generateHeatMap(this.state.incidents)}
           </View>
           <TouchableWithoutFeedback onPress={this._onAutocomplete}>
               <View
