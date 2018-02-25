@@ -19,6 +19,7 @@ import {
   Button,
   Switch,
   TouchableOpacity,
+  Image
 } from 'react-native';
 import {getDirections, getPolyLines} from "./apis/maps";
 
@@ -100,6 +101,29 @@ export default class App extends Component {
         })
   }
 
+  _thrash = () => {
+        alert("thrash");
+    }
+    
+  _roadwork = () => {
+    alert("roadwork");
+    }
+
+  _event = () => {
+        alert("event");
+    }
+
+  _warning = () => {
+    alert("warning");
+    }
+
+  _help = () => {
+    alert("help");
+    }
+    
+  _thief = () => {
+    alert("thief");
+}  
   _onAutocomplete = ()  => {
       RNPlaces.openAutocompleteModal()
           .then((data) => {
@@ -147,7 +171,7 @@ export default class App extends Component {
                       justifyContent: "center",
                       backgroundColor: "#fff",
                       padding: 15,
-                      width:"60%",
+                      width:"68%",
                       left:20,
                       bottom: "5%",
                       position: "absolute",
@@ -163,89 +187,232 @@ export default class App extends Component {
 
 
            <TouchableOpacity
-                style={styles.button}
+                onPress = {this._route}
+                style={{
+
+                  bottom: "5%",
+                  left: "75%",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  width:50,
+                  height:50,
+                  borderRadius: 100,
+                    shadowColor: "#222",
+                    shadowOpacity: 0.35,
+                    shadowRadius: 5,
+                    shadowOffset: {width: 1, height: 1}
+                    
+                
+                }}
                 onPress={this.onPress}>
-                <Text> Touch Here </Text>
+                <Image
+                    style={{
+                        maxWidth:50,
+                        resizeMode:"contain"
+                    }}
+                    source={require('./assets/arrow.png')}
+                />
             </TouchableOpacity>
           <View 
               style={{
                   bottom: "80%",
                   left: "5%",
+                  justifyContent:"center",
+                  alignItems:"center",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
                   backgroundColor: "white",
-                  borderRadius: 50
+                  borderRadius: 100
             }}>
-                <Button
-                  title = {"T"}
-                  onPress = {this._route}/>
+                <TouchableOpacity
+                onPress = {this._route}
+                style={{
+                    justifyContent: "center",
+                    width:35,
+                    height:35
+                               
+                }}
+                onPress={this._thrash}>
+                <Image
+                    style={{
+                        maxWidth:35,
+                        resizeMode:"contain"
+                    }
+                    }
+                    source={require('./assets/garbage.png')}
+                />
+                </TouchableOpacity>
           </View>
           <View 
               style={{
                   bottom: "70%",
                   left: "5%",
+                  justifyContent:"center",
+                  alignItems:"center",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
                   backgroundColor: "white",
-                  borderRadius: 50
+                  borderRadius: 100
             }}>
-                <Button
-                  title = {"C"}
-                  onPress = {this._route}/>
+                <TouchableOpacity
+                onPress = {this._roadwork}
+                style={{
+                    justifyContent: "center",
+                    width:35,
+                    height:35
+                               
+                }}
+                onPress={this._route}>
+                <Image
+                    style={{
+                        maxWidth:35,
+                        resizeMode:"contain"
+                    }
+                    }
+                    source={require('./assets/hazard.png')}
+                />
+                </TouchableOpacity>
           </View>
           <View 
               style={{
                   bottom: "60%",
                   left: "5%",
+                  justifyContent:"center",
+                  alignItems:"center",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
                   backgroundColor: "white",
-                  borderRadius: 50
+                  borderRadius: 100
             }}>
-                <Button
-                  title = {"H"}
-                  onPress = {this._route}/>
+                <TouchableOpacity
+                onPress = {this._event}
+                style={{
+                    justifyContent: "center",
+                    width:35,
+                    height:35
+                               
+                }}
+                onPress={this.onPress}>
+                <Image
+                    style={{
+                        maxWidth:35,
+                        resizeMode:"contain"
+                    }
+                    }
+                    source={require('./assets/event.png')}
+                />
+                </TouchableOpacity>
           </View>
 
           <View 
               style={{
                   bottom: "50%",
                   left: "5%",
+                  justifyContent:"center",
+                  alignItems:"center",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
                   backgroundColor: "white",
-                  borderRadius: 50
+                  borderRadius: 100
             }}>
-                <Button
-                  title = {"C"}
-                  onPress = {this._route}/>
+                <TouchableOpacity
+                onPress = {this._route}
+                style={{
+                    justifyContent: "center",
+                    width:35,
+                    height:35
+                               
+                }}
+                onPress={this._warning}>
+                <Image
+                    style={{
+                        maxWidth:35,
+                        resizeMode:"contain"
+                    }
+                    }
+                    source={require('./assets/warning-sign.png')}
+                />
+                </TouchableOpacity>
           </View>
 
           <View 
               style={{
                   bottom: "40%",
                   left: "5%",
+                  justifyContent:"center",
+                  alignItems:"center",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
                   backgroundColor: "white",
-                  borderRadius: 50
+                  borderRadius: 100
             }}>
-                <Button
-                  title = {"E"}
-                  onPress = {this._route}/>
+                <TouchableOpacity
+                onPress = {this._help}
+                style={{
+                    justifyContent: "center",
+                    width:35,
+                    height:35
+                               
+                }}
+                onPress={this.onPress}>
+                <Image
+                    style={{
+                        maxWidth:35,
+                        resizeMode:"contain"
+                    }
+                    }
+                    source={require('./assets/heart.png')}
+                />
+                </TouchableOpacity>
           </View>
-
           <View 
               style={{
-                  bottom: "20%",
+                  bottom: "30%",
+                  left: "5%",
+                  justifyContent:"center",
+                  alignItems:"center",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 100
+            }}>
+                <TouchableOpacity
+                onPress = {this._thief}
+                style={{
+                    justifyContent: "center",
+                    width:35,
+                    height:35
+                               
+                }}
+                onPress={this.onPress}>
+                <Image
+                    style={{
+                        maxWidth:35,
+                        resizeMode:"contain"
+                    }
+                    }
+                    source={require('./assets/thief.png')}
+                />
+                </TouchableOpacity>
+          </View>
+          
+
+          <View 
+              style={{
+                  bottom: "13%",
+                  position: "absolute",
+                  paddingHorizontal: 2,
+                  paddingVertical: 2,
                   backgroundColor: "white",
                   borderRadius: 50
             }}>
