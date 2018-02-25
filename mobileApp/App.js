@@ -102,27 +102,82 @@ export default class App extends Component {
   }
 
   _thrash = () => {
-        alert("thrash");
+      alert("Trash alert sent");
+      const body = {
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+        type: "trash"
+        }
+        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        body: JSON.stringify(body),
+        method: 'POST'
+        }).catch((err) => console.log(err))
+        
     }
     
   _roadwork = () => {
-    alert("roadwork");
+    alert("Construction alert sent");
+    const body = {
+      lat: this.state.latitude,
+      lng: this.state.longitude,
+      type: "construction"
+      }
+      return fetch("https://hackil18.herokuapp.com/updateIncident", {
+      body: JSON.stringify(body),
+      method: 'POST'
+      }).catch((err) => console.log(err))
     }
 
   _event = () => {
-        alert("event");
+        alert("Event alert sent");
+        const body = {
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+        type: "event"
+        }
+        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        body: JSON.stringify(body),
+        method: 'POST'
+        }).catch((err) => console.log(err))
     }
 
   _warning = () => {
-    alert("warning");
+        alert("Road warning alert sent");
+        const body = {
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+        type: "hazard"
+        }
+        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        body: JSON.stringify(body),
+        method: 'POST'
+        }).catch((err) => console.log(err))
     }
 
   _help = () => {
-    alert("help");
+      alert("Food alert sent");
+    const body = {
+      lat: this.state.latitude,
+      lng: this.state.longitude,
+      type: "food"
+      }
+      return fetch("https://hackil18.herokuapp.com/updateIncident", {
+      body: JSON.stringify(body),
+      method: 'POST'
+      }).catch((err) => console.log(err))
     }
     
   _thief = () => {
-    alert("thief");
+        alert("Crime alert sent");
+        const body = {
+        lat: this.state.latitude,
+        lng: this.state.longitude,
+        type: "crime"
+        }
+        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        body: JSON.stringify(body),
+        method: 'POST'
+        }).catch((err) => console.log(err))
 }  
   _onAutocomplete = ()  => {
       RNPlaces.openAutocompleteModal()
@@ -208,7 +263,7 @@ export default class App extends Component {
                     
                 
                 }}
-                onPress={this.onPress}>
+                onPress={this._route}>
                 <Image
                     style={{
                         maxWidth:50,
@@ -267,7 +322,7 @@ export default class App extends Component {
                     width:35,
                     height:35
                 }}
-                onPress={this._route}>
+                onPress={this._roadwork}>
                 <Image
                     style={{
                         maxWidth: 35,
@@ -297,7 +352,7 @@ export default class App extends Component {
                     width:35,
                     height:35
                 }}
-                onPress={this.onPress}>
+                onPress={this._event}>
                 <Image
                     style={{
                         maxWidth: 35,
@@ -359,7 +414,7 @@ export default class App extends Component {
                     width:35,
                     height:35
                 }}
-                onPress={this.onPress}>
+                onPress={this._help}>
                 <Image
                     style={{
                         maxWidth:35,
@@ -389,7 +444,7 @@ export default class App extends Component {
                     width:35,
                     height:35
                 }}
-                onPress={this.onPress}>
+                onPress={this._thief}>
                 <Image
                     style={{
                         maxWidth:35,
