@@ -97,7 +97,7 @@ export default class App extends Component {
       getDirections({lat: this.state.latitude, lng:this.state.longitude}, this.getDestLatLong())
         .then((data) => {
             console.log(data.routes);
-            this.setState({coords: getPolyLines(data.routes)})
+            getPolyLines(data.routes).then((data) => this.setState({coords: data}))
         })
   }
 
@@ -260,8 +260,6 @@ export default class App extends Component {
                     shadowOpacity: 0.35,
                     shadowRadius: 5,
                     shadowOffset: {width: 1, height: 1}
-                    
-                
                 }}
                 onPress={this._route}>
                 <Image
@@ -297,8 +295,7 @@ export default class App extends Component {
                         maxWidth: 35,
                         maxHeight: 35,
                         resizeMode:"contain"
-                    }
-                    }
+                    }}
                     source={require('./assets/garbage.png')}
                 />
                 </TouchableOpacity>
