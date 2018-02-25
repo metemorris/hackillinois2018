@@ -14,6 +14,8 @@ class Firebase:
         pass
 
     def addEntry(self, lat, long,user_id):
+        oldLat = lat
+        oldLong = long
         lat = (lat+90)*100000
         long = (long+180)*100000
         lat_long_key = str(int(lat))+'-'+str(int(long))
@@ -37,7 +39,7 @@ class Firebase:
         cursor = cnxn.cursor()
         user_id = str(user_id)
 
-        cursor.execute("INSERT INTO traffic VALUES (?,?,?,?)",(user_id,lat,long,dt))
+        cursor.execute("INSERT INTO traffic VALUES (?,?,?,?)",(user_id,oldLat,oldLong,dt))
         cnxn.commit()
 
     def getIncidents(self,current_point):
@@ -65,6 +67,8 @@ class Firebase:
         return locationList
 
     def addIncident(self, lat, long,type):
+        oldLat = lat
+        oldLong = long
         lat = (lat+90)*100000
         long = (long+180)*100000
         lat_long_key = str(int(lat))+'-'+str(int(long))
@@ -80,7 +84,7 @@ class Firebase:
         cnxn = pyodbc.connect(
             'DRIVER=' + driver + ';PORT=1433;SERVER=' + server + ';PORT=1443;DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
         cursor = cnxn.cursor()
-        cursor.execute("INSERT INTO incident VALUES (?,?, ?,?)",(lat,long,type,dt))
+        cursor.execute("INSERT INTO incident VALUES (?,?, ?,?)",(oldLat,oldLong,type,dt))
         cnxn.commit()
 
     def getTraffic(self,current_point):
