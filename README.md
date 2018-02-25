@@ -61,3 +61,156 @@ If the code change results in a test failure or build failiure, we will make our
 
 ## Licensing and Using in Your Community
 To be filled
+
+
+How to run the backend
+============
+
+The backend is implemented in Python Flask and contains the rest endpoints for the front end to access. The backend is deployed on Heroku. 
+
+Instructions
+------------
+
+First, you'll need to clone the repo.
+
+    $ git clone https://github.com/adityaparakh/hackillinois18backend.git
+
+Second, let's download `pip`, `virtualenv`, `foreman`, and the [`heroku`
+Ruby gem](http://devcenter.heroku.com/articles/using-the-cli).
+
+    $ sudo easy_install pip
+    $ sudo pip install virtualenv
+    $ sudo gem install foreman heroku
+
+Now, you can setup an isolated environment with `virtualenv`.
+
+    $ virtualenv --no-site-packages env
+    $ source env/bin/activate
+
+
+Installing Packages
+--------------------
+
+### Gevent
+
+To use `gevent`, we'll need to install `libevent` for the
+`gevent` production server. If you're operating on a Linux OS, you can
+`apt-get install libevent-dev`. If you're using Mac OS X, consider
+installing the [homebrew](http://mxcl.github.com/homebrew/) package
+manager, and run the following command:
+
+    $ brew install libevent
+
+If you're using Mac OS X, you can also install `libevent` through [a DMG
+available on Rudix](http://rudix.org/packages-jkl.html#libevent).
+
+
+### Without Gevent
+
+If you'd rather use `gunicorn` without `gevent`, you just need to edit
+the `Procfile` and `requirements.txt`.
+
+First, edit the `Procfile` to look the following:
+
+    web: gunicorn -w 4 -b "0.0.0.0:$PORT" app:app
+
+Second, remove `gevent` from the `requirements.txt` file.
+
+### pip
+
+Then, let's get the requirements installed in your isolated test
+environment.
+
+    $ pip install -r requirements.txt
+
+
+Running Your Application
+------------------------
+
+Now, you can run the application locally.
+
+    $ foreman start
+
+You can also specify what port you'd prefer to use.
+
+    $ foreman start -p 5555
+
+
+Deploying to Heroku
+---------
+
+    $ git push heroku master
+    $ heroku scale web=1
+
+Finally, we can make sure the application is up and running.
+
+    $ heroku ps
+
+Now, we can view the application in our web browser.
+
+    $ heroku open
+
+And, to deactivate `virtualenv` (once you've finished coding), you
+simply run the following command:
+
+    $ deactivate
+
+
+Rest endpoints
+----------
+
+After you've got your application up and running, there a couple next
+steps you should consider following
+
+### /update/ 
+
+POST request
+
+It takes in: 
+- latitude (required)
+- longitude (required)
+- user id (required)
+
+This updates the user's location in the SQL database and also on firebase for real time updates. 
+
+### /updateIncidents/ 
+
+POST request
+
+It takes in: 
+- latitude (required)
+- longitude (required)
+- type (required)
+
+This updates the incident's location, along with the type in the SQL database and also on firebase for real time updates. 
+
+### /get/heatmap/ 
+
+POST request
+
+It takes in: 
+- latitude (required)
+- longitude (required)
+
+This gives the heatmap near the location.
+
+
+### /get/traffic/ 
+
+POST request
+
+It takes in: 
+- latitude (required)
+- longitude (required)
+
+This gives the traffic around a certain location.
+
+### /get/incident/ 
+
+POST request
+
+It takes in: 
+- latitude (required)
+- longitude (required)
+
+This gives the incident around a certain location.
