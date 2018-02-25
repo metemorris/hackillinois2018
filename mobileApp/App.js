@@ -19,7 +19,6 @@ import {
   Button,
   Switch,
   TouchableOpacity,
-  Image
 } from 'react-native';
 import {getDirections, getPolyLines} from "./apis/maps";
 
@@ -148,17 +147,13 @@ export default class App extends Component {
                   <Text> {this.state.dest.name} </Text>
               </View>
           </TouchableWithoutFeedback>
-          <View 
-              style={{
-                  bottom: "5%",
-                  left:250,
-                  position: "absolute",
-                  paddingHorizontal: 5,
-                  paddingVertical: 5,
-                  backgroundColor: "white",
-                  borderRadius: 50
-            }}>
-          </View>
+
+
+           <TouchableOpacity
+                style={styles.button}
+                onPress={this.onPress}>
+                <Text> Touch Here </Text>
+            </TouchableOpacity>
           <View 
               style={{
                   bottom: "80%",
