@@ -24,7 +24,15 @@ Back-end was made using phython flask.
 ## Open Sourcing the platform
 We strongly believe that this tool needs to be open sourced in order to maintain transparency, credibility and allow government and city officials to maintain their own version of the database and data analytics to empower their communities and economic development. 
 
+Why Walkable
+============
+## Information overload - Accessing the world’s information and making it readily accessible to everyone. 
 
+We are crowdsourcing the pathways of walking to make walking around the town a better and a more feasible journey. We help users report incidents such as food shelters, or potholes - helping the users nearby know whether they should take a particular path or not. This is readily available to everyone through the power of open source, including government 
+
+## Hardcore software - Tool that expand upon current Microsoft tech 
+
+We used Microsoft BI to analyze results of our findings regarding the walking patterns and incidents
 
 How to run the backend
 ============
