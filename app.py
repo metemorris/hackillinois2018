@@ -40,6 +40,19 @@ def my_test_endpoint():
     boop.addEntry(lat, lng, userId)
     return render_template('home.html')
 
+@app.route('/updateIncident', methods=['POST'])
+def my_update_endpoint():
+    input_json = request.get_json(force=True)
+    # force=True, above, is necessary if another developer
+    # forgot to set the MIME type to 'application/json'
+    lat = float(input_json['lat'])
+    lng = float(input_json['lng'])
+    userId = str(input_json['type'])
+    boop = Firebase()
+    boop.addIncident(lat, lng, userId)
+    return render_template('home.html')
+
+
 
 @app.route('/get/traffic', methods=['POST'])
 def my_data():

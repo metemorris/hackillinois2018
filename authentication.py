@@ -42,7 +42,17 @@ class Firebase:
         print(indices)
         userid = []
         emoticons = {}
-        rteurn
+        return 1
+
+    def addIncident(self, lat, long,type):
+        lat = (lat+90)*100000
+        long = (long+180)*100000
+        lat_long_key = str(int(lat))+'-'+str(int(long))
+        dt = datetime.datetime.now()
+        self.firebase.put('/incident/'+lat_long_key, type, data={'loc': type})
+        self.firebase.post('/incidentType/'+type,
+                           data={'lat': lat, 'long': long, 'locKey':lat_long_key, 'type': type})
+
     def getTraffic(self,current_point):
         locations_result = self.firebase.get("location", None)
         #print(locations_result)
