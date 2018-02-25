@@ -24,7 +24,7 @@ Back-end was made using phython flask.
 ## Open Sourcing the platform
 We strongly believe that this tool needs to be open sourced in order to maintain transparency, credibility and allow government and city officials to maintain their own version of the database and data analytics to empower their communities and economic development. 
 
-Why Walkable
+Prizes
 ============
 ## Information overload - Accessing the world’s information and making it readily accessible to everyone. 
 
