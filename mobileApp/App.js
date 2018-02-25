@@ -9,6 +9,7 @@ import RNPlaces from 'react-native-google-places';
 import MapView, {Marker} from "react-native-maps";
 import uuid from "uuid/v4"
 import heatView from "./web/heatView.html";
+import locIcon from "./assets/loc2.png";
 
 import {
   StyleSheet,
@@ -132,6 +133,10 @@ export default class App extends Component {
                       /> :
                       <View/>
               }
+              <Marker
+                  coordinate={{latitude: this.state.latitude, longitude: this.state.longitude}}
+                  image={locIcon}
+              />
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
               {this._generateHeatMap()}
