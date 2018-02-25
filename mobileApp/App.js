@@ -23,7 +23,6 @@ import {
     WebView,
     TouchableWithoutFeedback,
   View,
-  Button,
   Switch,
   TouchableOpacity,
   Image
@@ -38,7 +37,11 @@ export default class App extends Component {
         dest: {name: "Enter Destination"},
         text:" Hello",
         coords: [],
+        fcoords: [],
+        fast: false,
         heatmap: [],
+        myLat: 0,
+        myLng: 0,
         latitude: 0,
         longitude: 0,
         latitudeDelta: 0.012,
@@ -53,8 +56,8 @@ export default class App extends Component {
           lat: this.state.latitude,
           lng: this.state.longitude,
       }
-      fetch("https://hackil18.herokuapp.com/get/nearby", {
-          body: JSON.stringify([body]),
+      fetch("http://159.89.226.72/get/nearby", {
+          body: JSON.stringify(body),
           method: 'POST'
       }).then((res)=> res.json())
           .then((res) => {
@@ -80,7 +83,7 @@ export default class App extends Component {
             lat: this.state.latitude,
             lng: this.state.longitude,
         }
-        fetch("https://hackil18.herokuapp.com/get/incident", {
+        fetch("http://159.89.226.72/get/incident", {
             body: JSON.stringify([body]),
             method: 'POST'
         })
@@ -147,7 +150,7 @@ export default class App extends Component {
           lng: loc.lng,
           uuid: uuid
       }
-      return fetch("https://hackil18.herokuapp.com/update", {
+      return fetch("http://159.89.226.72/update", {
           body: JSON.stringify(body),
           method: 'POST'
       }).catch((err) => console.log(err))
@@ -158,6 +161,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+      let times = 0;
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
         this._updateLocation({
@@ -166,11 +170,18 @@ export default class App extends Component {
         }, this.state.uuid);
         this._getIncidents();
         this._getHeatMapPoints();
+        times += 1;
         this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
+            myLat: position.coords.latitude,
+            myLng: position.coords.longitude,
+            error: null,
         });
+        if(times <= 2) {
+            this.setState({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            });
+        }
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 20 },
@@ -187,21 +198,21 @@ export default class App extends Component {
   })
 
   _route = () => {
-      getDirections({lat: this.state.latitude, lng:this.state.longitude}, this.getDestLatLong())
-        .then((data) => {
-            console.log(data.routes);
+      getDirections({lat: this.state.myLat, lng:this.state.myLng}, this.getDestLatLong())
+        .then(({good, fast}) => {
+            console.log(good.routes);
             getPolyLines(data.routes).then((data) => this.setState({coords: data}))
         })
   }
 
   _thrash = () => {
-      alert("Contamination alert sent");
-      const body = {
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-        type: "trash"
+       alert("Contamination alert sent");
+        const body = {
+            lat: this.state.latitude,
+            lng: this.state.longitude,
+            type: "trash"
         }
-        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        return fetch("http://159.89.226.72/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -209,12 +220,12 @@ export default class App extends Component {
     
   _roadwork = () => {
       alert("Construction alert sent");
-    const body = {
-      lat: this.state.latitude,
-      lng: this.state.longitude,
-      type: "construction"
+      const body = {
+          lat: this.state.latitude,
+          lng: this.state.longitude,
+          type: "construction"
       }
-      return fetch("https://hackil18.herokuapp.com/updateIncident", {
+      return fetch("http://159.89.226.72/updateIncident", {
       body: JSON.stringify(body),
       method: 'POST'
       }).catch((err) => console.log(err))
@@ -223,11 +234,11 @@ export default class App extends Component {
   _event = () => {
         alert("Event alert sent");
         const body = {
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-        type: "event"
+            lat: this.state.myLat,
+            lng: this.state.myLng,
+            type: "event"
         }
-        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        return fetch("http://159.89.226.72/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -236,11 +247,11 @@ export default class App extends Component {
   _warning = () => {
        alert("Caution alert sent");
         const body = {
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-        type: "hazard"
+            lat: this.state.myLat,
+            lng: this.state.myLng,
+            type: "hazard"
         }
-        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        return fetch("http://159.89.226.72/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -248,12 +259,12 @@ export default class App extends Component {
 
   _help = () => {
       alert("Free common goods alert sent");
-    const body = {
-      lat: this.state.latitude,
-      lng: this.state.longitude,
-      type: "food"
+      const body = {
+          lat: this.state.myLat,
+          lng: this.state.myLng,
+          type: "food"
       }
-      return fetch("https://hackil18.herokuapp.com/updateIncident", {
+      return fetch("http://159.89.226.72/updateIncident", {
       body: JSON.stringify(body),
       method: 'POST'
       }).catch((err) => console.log(err))
@@ -262,11 +273,11 @@ export default class App extends Component {
   _thief = () => {
         alert("Crime alert sent");
         const body = {
-        lat: this.state.latitude,
-        lng: this.state.longitude,
-        type: "crime"
+            lat: this.state.myLat,
+            lng: this.state.myLng,
+            type: "crime"
         }
-        return fetch("https://hackil18.herokuapp.com/updateIncident", {
+        return fetch("http://159.89.226.72/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -298,6 +309,15 @@ export default class App extends Component {
                   latitudeDelta: this.state.latitudeDelta,
                   longitudeDelta: this.state.longitudeDelta,
               }}>
+              {
+                  this.state.fast ?
+                      <MapView.Polyline
+                          coordinates={this.state.fcoords}
+                          strokeWidth={2}
+                          strokeColor="blue"/>
+                      :
+                      <View/>
+              }
               <MapView.Polyline
                   coordinates={this.state.coords}
                   strokeWidth={2}
@@ -313,10 +333,9 @@ export default class App extends Component {
               }
               {this.state.incidents ? this._placeIncident(this.state.incidents) : <View/>}
               <Marker
-                  coordinate={{latitude: this.state.latitude, longitude: this.state.longitude}}
+                  coordinate={{latitude: this.state.myLat, longitude: this.state.myLng}}
                   image={locIcon}
               />
-
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
               {this.state.heatmap ? this._generateHeatMap(this.state.incidents) : <View/>}
@@ -341,12 +360,9 @@ export default class App extends Component {
                   <Text> {this.state.dest.name} </Text>
               </View>
           </TouchableWithoutFeedback>
-
-
            <TouchableOpacity
                 onPress = {this._route}
                 style={{
-
                   bottom: "5%",
                   left: "75%",
                   justifyContent:"center",
@@ -554,20 +570,14 @@ export default class App extends Component {
                 />
                 </TouchableOpacity>
           </View>
-          
-
-          <View 
-              style={{
+          <View style={{
                   bottom: "13%",
                   position: "absolute",
                   paddingHorizontal: 2,
                   paddingVertical: 2,
                   backgroundColor: "white",
-                  borderRadius: 50
-            }}>
-                <Switch
-                  title = {"Mete"}
-                  onPress = {this._route}/>
+                  borderRadius: 50 }}>
+              <Switch onValueChange={() => this.setState({fast: !this.state.fast})}/>
           </View>
       </View>
       

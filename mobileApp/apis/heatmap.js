@@ -5,7 +5,7 @@ export const runHeatMap = (coords, lat, lng) => {
     const LAT_ASC = 0.11;
     const LNG_ASC = 0.22;
     const points = coords.map((coord, idx) => {
-        var val = Math.floor(Math.abs(coord[0].lat));
+        var val = Math.floor(Math.random()*100);
         max = Math.max(max, val);
         return {
             x: width/2 + Math.floor((coord.lat-lat)*width*LAT_ASC),

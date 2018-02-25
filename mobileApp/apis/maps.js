@@ -21,8 +21,8 @@ const getPolyLines = (routes) => {
             lng : point[1]
         }))
     });
-    console.log(body)
-    return fetch("https://hackil18.herokuapp.com/get/traffic", {
+    console.log(JSON.stringify(body))
+    return fetch("http://159.89.226.72/get/traffic", {
         body: JSON.stringify(body),
         method: 'POST'
     }).then((res) => res.json())
@@ -37,14 +37,21 @@ const getPolyLines = (routes) => {
                 }
             }
             let points = Polyline.decode(routes[idx].overview_polyline.points);
-            let coords = points.map((point) => {
+            let points2 = Polyline.decode(routes[0].overview_polyline.points);
+            let good = points.map((point) => {
                 return  {
                     latitude : point[0],
                     longitude : point[1]
                 }
             })
-            console.log(coords)
-            return coords;
+            let fast = points2.map((point) => {
+                return  {
+                    latitude : point[0],
+                    longitude : point[1]
+                }
+            })
+            console.log(good)
+            return {good, fast};
         })
 }
 
