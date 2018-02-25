@@ -34,6 +34,8 @@ export default class App extends Component {
         heatmap: [],
         latitude: 0,
         longitude: 0,
+        latitudeDelta: 0.012,
+        longitudeDelta: 0.015,
         incidents: [],
         uuid: "None"    
     };
@@ -231,11 +233,19 @@ export default class App extends Component {
       <View style={styles.container}>
           <MapView
               style={StyleSheet.absoluteFill}
+              onRegionChange={(region) => {
+                  this.setState({
+                      latitude: region.latitude,
+                      longitude: region.longitude,
+                      latitudeDelta: region.latitudeDelta,
+                      longitudeDelta: region.longitudeDelta,
+                  })
+              }}
               region={{
                   latitude: this.state.latitude,
                   longitude: this.state.longitude,
-                  latitudeDelta: 0.012,
-                  longitudeDelta: 0.015,
+                  latitudeDelta: this.state.latitudeDelta,
+                  longitudeDelta: this.state.longitudeDelta,
               }}>
               <MapView.Polyline
                   coordinates={this.state.coords}
