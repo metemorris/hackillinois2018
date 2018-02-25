@@ -55,24 +55,30 @@ def my_update_endpoint():
 
 
 @app.route('/get/traffic', methods=['POST'])
-def my_data():
-    base = Firebase()
+def poopyPie():
+    traffic = []
     input_json = request.get_json(force=True)
+    for i in input_json:
+        traffic.append(my_data(i))
+    return jsonify({'traffic': traffic})
+
+def my_data(input_json):
+    base = Firebase()
+
     data = []
     for i in input_json:
         data.append((i["lat"], i["lng"]))
     #print(data)
     res = []
     for i in range(len(data)):
-        print(base.getTraffic(data[i]))
+        #print(base.getTraffic(data[i]))
         if i%5 == 0:
             res.append(base.getTraffic(data[i]))
         if i%5 != 0 and i == len(data)-1:
             res.append(base.getTraffic((data[i])))
-    #print(res)
     total = sum(res)
     traffic = total/len(res)
-    return jsonify({'traffic': traffic})
+    return traffic
 
 @app.route('/get/incident', methods=['POST'])
 def my_data_event():

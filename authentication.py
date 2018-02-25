@@ -65,7 +65,6 @@ class Firebase:
         #print(locations_result)
         locations = []
         for i in locations_result:
-            #print(i)
             locations.append(self.decryptLocation(i))
         #print(locations)
         tree = KDTree(locations, distance_metric='Arc', radius=pysal.cg.RADIUS_EARTH_MILES)
@@ -81,6 +80,7 @@ class Firebase:
         hour = dt.hour
 
         userid = []
+
         for i in indices:
             key = self.encryptLocation(locations[i])
             userId = list(locations_result[key].keys())[0]
@@ -99,8 +99,8 @@ class Firebase:
 
     def encryptLocation(self,latLong):
         lat,long = latLong[0],latLong[1]
-        lat = (lat + 90) * 100000
-        long = (long + 180) * 100000
+        lat = round((lat + 90) * 100000,6)
+        long = round((long + 180) * 100000,6)
         return str(int(lat)) + '-' + str(int(long))
 
     def getSomeShit(self):
