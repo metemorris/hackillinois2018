@@ -52,7 +52,6 @@ export default class App extends Component {
             lat: this.state.latitude,
             lng: this.state.longitude,
         }
-        alert(JSON.stringify(body))
         fetch("https://hackil18.herokuapp.com/get/incident", {
             body: JSON.stringify([body]),
             method: 'POST'
