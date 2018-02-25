@@ -19,7 +19,7 @@ Reports and visualizes insights from user data to public safety to improve secur
 - Give and receive general community feedback on paths that people take every day
 
 ## Open Sourcing the platform
-We strongly believe that this tool needs to be open sourced in order to maintain transparency, credibility and allow government and city officials to maintain their own version of the database and data analytics to empower their communities and economic development.
+We strongly believe that this tool needs to be open sourced in order to maintain transparency, credibility and allow government and city officials to maintain their own version of the database and data analytics to empower their communities and economic development. 
 
 ## Contributing
 ### How to contribute Third-party contributions is the spirit of open source development.
@@ -214,3 +214,11 @@ It takes in:
 - longitude (required)
 
 This gives the incident around a certain location.
+
+
+Testing | Simulating users
+----------
+To simulate users, you can run simulation.py. 
+
+Simulation.py contains the range of latitude/longitude you want your 'users' to be simulated within. You can also specify how much distance the users should move, and also specify the duration in which they will trigger an incident. Along with the amount of users that can be simulated, even the randomness of an incident generation can be adjusted.
+
