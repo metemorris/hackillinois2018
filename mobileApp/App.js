@@ -16,7 +16,10 @@ import {
     WebView,
     TouchableWithoutFeedback,
   View,
-  Button
+  Button,
+  Switch,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import {getDirections, getPolyLines} from "./apis/maps";
 
@@ -132,8 +135,9 @@ export default class App extends Component {
                       justifyContent: "center",
                       backgroundColor: "#fff",
                       padding: 15,
-                      width:"80%",
-                      bottom: 75,
+                      width:"60%",
+                      left:20,
+                      bottom: "5%",
                       position: "absolute",
                       borderRadius: 15,
                       shadowColor: "#222",
@@ -146,7 +150,19 @@ export default class App extends Component {
           </TouchableWithoutFeedback>
           <View 
               style={{
-                  bottom: 15,
+                  bottom: "5%",
+                  left:250,
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
+            }}>
+          </View>
+          <View 
+              style={{
+                  bottom: "80%",
+                  left: "5%",
                   position: "absolute",
                   paddingHorizontal: 5,
                   paddingVertical: 5,
@@ -154,10 +170,83 @@ export default class App extends Component {
                   borderRadius: 50
             }}>
                 <Button
-                  title = {"Directions"}
+                  title = {"T"}
+                  onPress = {this._route}/>
+          </View>
+          <View 
+              style={{
+                  bottom: "70%",
+                  left: "5%",
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
+            }}>
+                <Button
+                  title = {"C"}
+                  onPress = {this._route}/>
+          </View>
+          <View 
+              style={{
+                  bottom: "60%",
+                  left: "5%",
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
+            }}>
+                <Button
+                  title = {"H"}
+                  onPress = {this._route}/>
+          </View>
+
+          <View 
+              style={{
+                  bottom: "50%",
+                  left: "5%",
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
+            }}>
+                <Button
+                  title = {"C"}
+                  onPress = {this._route}/>
+          </View>
+
+          <View 
+              style={{
+                  bottom: "40%",
+                  left: "5%",
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
+            }}>
+                <Button
+                  title = {"E"}
+                  onPress = {this._route}/>
+          </View>
+
+          <View 
+              style={{
+                  bottom: "20%",
+                  position: "absolute",
+                  paddingHorizontal: 5,
+                  paddingVertical: 5,
+                  backgroundColor: "white",
+                  borderRadius: 50
+            }}>
+                <Switch
+                  title = {"Mete"}
                   onPress = {this._route}/>
           </View>
       </View>
+      
     );
   }
 }
