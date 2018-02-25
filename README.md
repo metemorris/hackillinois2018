@@ -34,6 +34,18 @@ We are crowdsourcing the pathways of walking to make walking around the town a b
 
 We used Microsoft BI to analyze results of our findings regarding the walking patterns and incidents
 
+## Fund your dreamscape
+
+Walkable implements react-native and uses react-native-maps in the frontend. To further extend upon react-native-maps, we implemented a heat map for hot locations where users walked. This feature can be further extended to include different colors for heat maps, etc. 
+
+## Walking your dog food to Market 
+
+Walkable has commercial viability in the sense that the data collected can be used by people ranging from government officials trying to find the locations with most reported incidents to real estate developers trying to find out the most walked location in a vicinity. 
+
+## Hacking socio-technical challenge in our community
+
+Walkable creates a dataset for walking patterns and incident reports in a particular town or vicinity. The data collected in the app can be used to extend the current data available to the extending municipal data to the City of Champaign.
+
 How to run the backend
 ============
 
