@@ -22,7 +22,7 @@ const getPolyLines = (routes) => {
         }))
     });
     console.log(JSON.stringify(body))
-    return fetch("http://159.89.226.72/get/traffic", {
+    return fetch("https://hackilli.herokuapp.com/get/traffic", {
         body: JSON.stringify(body),
         method: 'POST'
     }).then((res) => res.json())

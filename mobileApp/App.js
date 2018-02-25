@@ -56,7 +56,7 @@ export default class App extends Component {
           lat: this.state.latitude,
           lng: this.state.longitude,
       }
-      fetch("http://159.89.226.72/get/nearby", {
+      fetch("https://hackilli.herokuapp.com/get/nearby", {
           body: JSON.stringify(body),
           method: 'POST'
       }).then((res)=> res.json())
@@ -83,7 +83,7 @@ export default class App extends Component {
             lat: this.state.latitude,
             lng: this.state.longitude,
         }
-        fetch("http://159.89.226.72/get/incident", {
+        fetch("https://hackilli.herokuapp.com/get/incident", {
             body: JSON.stringify([body]),
             method: 'POST'
         })
@@ -150,7 +150,7 @@ export default class App extends Component {
           lng: loc.lng,
           uuid: uuid
       }
-      return fetch("http://159.89.226.72/update", {
+      return fetch("https://hackilli.herokuapp.com/update", {
           body: JSON.stringify(body),
           method: 'POST'
       }).catch((err) => console.log(err))
@@ -212,7 +212,7 @@ export default class App extends Component {
             lng: this.state.longitude,
             type: "trash"
         }
-        return fetch("http://159.89.226.72/updateIncident", {
+        return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -225,7 +225,7 @@ export default class App extends Component {
           lng: this.state.longitude,
           type: "construction"
       }
-      return fetch("http://159.89.226.72/updateIncident", {
+      return fetch("https://hackilli.herokuapp.com/updateIncident", {
       body: JSON.stringify(body),
       method: 'POST'
       }).catch((err) => console.log(err))
@@ -238,7 +238,7 @@ export default class App extends Component {
             lng: this.state.myLng,
             type: "event"
         }
-        return fetch("http://159.89.226.72/updateIncident", {
+        return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -251,7 +251,7 @@ export default class App extends Component {
             lng: this.state.myLng,
             type: "hazard"
         }
-        return fetch("http://159.89.226.72/updateIncident", {
+        return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
@@ -264,7 +264,7 @@ export default class App extends Component {
           lng: this.state.myLng,
           type: "food"
       }
-      return fetch("http://159.89.226.72/updateIncident", {
+      return fetch("https://hackilli.herokuapp.com/updateIncident", {
       body: JSON.stringify(body),
       method: 'POST'
       }).catch((err) => console.log(err))
@@ -277,7 +277,7 @@ export default class App extends Component {
             lng: this.state.myLng,
             type: "crime"
         }
-        return fetch("http://159.89.226.72/updateIncident", {
+        return fetch("https://hackilli.herokuapp.com/updateIncident", {
         body: JSON.stringify(body),
         method: 'POST'
         }).catch((err) => console.log(err))
