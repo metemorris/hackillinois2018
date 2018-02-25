@@ -9,6 +9,13 @@ import MapView, {Marker} from "react-native-maps";
 import uuid from "uuid/v4";
 import heatView from "./web/heatView.html";
 import locIcon from "./assets/loc2.png";
+import constIcon from "./assets/hazardS.png";
+import foodIcon from "./assets/heartS.png";
+import eventIcon from "./assets/eventS.png";
+import trashIcon from "./assets/garbageS.png";
+import crimeIcon from "./assets/thiefS.png";
+import hazardIcon from "./assets/warning-signS.png";
+
 
 import {
   StyleSheet,
@@ -67,11 +74,60 @@ export default class App extends Component {
 
     _placeIncident = (incidents)=>{
         return incidents.map((incident, index)=>{
-            return (
-                <Marker key={index}
-                    coordinate={{latitude: incident.lat, longitude: incident.lng}}
-                    image={locIcon}
-            />);
+
+            switch(incident.type) {
+                case "construction":
+                return (
+                    <Marker key={index}
+                        coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                        image= {locIcon}
+                    />);
+                break;
+                case "crime":
+                    return (
+                        <Marker key={index}
+                            coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                            image={crimeIcon}
+                        />);
+                break;
+                case "event":
+                    return (
+                        <Marker key={index}
+                            coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                            image={eventIcon}
+                            />);
+                break;
+                case "food":
+                    return (
+                        <Marker key={index}
+                            coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                            image={foodIcon}
+                        />);
+                break;
+                case "hazard":
+                    return (
+                        <Marker key={index}
+                            coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                            image={hazardIcon}
+                        />);
+                break;
+                case "trash":
+                    return (
+                        <Marker key={index}
+                            coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                            image={trashIcon}
+                        />);
+                break;
+                default:
+                return (
+                    <Marker key={index}
+                        coordinate={{latitude: incident.lat, longitude: incident.lng}}
+                        image={hazardIcon}
+                    />);
+            }
+
+            
+            
         });
     }
 
@@ -195,7 +251,8 @@ export default class App extends Component {
     }
     
   _thief = () => {
-        alert(JSON.stringify(this.state.incidents));
+        //alert(JSON.stringify(this.state.incidents));
+        alert("Crime reported");
         const body = {
         lat: this.state.latitude,
         lng: this.state.longitude,
