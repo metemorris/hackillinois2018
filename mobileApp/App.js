@@ -49,9 +49,10 @@ export default class App extends Component {
 
   _getIncidents = () => {
         const body = {
-            lat: 37.3, //this.state.latitude,
-            lng: -122//this.state.longitude,
+            lat: this.state.latitude,
+            lng: this.state.longitude,
         }
+        alert(JSON.stringify(body))
         fetch("https://hackil18.herokuapp.com/get/incident", {
             body: JSON.stringify([body]),
             method: 'POST'
@@ -89,17 +90,16 @@ export default class App extends Component {
 
   componentWillMount() {
       this.setState({uuid: uuid()});
-      
   }
 
   componentDidMount() {
-    this._getIncidents();
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
         this._updateLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
         }, this.state.uuid);
+        this._getIncidents();
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
