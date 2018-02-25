@@ -64,6 +64,17 @@ def my_incidentheatmap_endpoint():
     return jsonify({"heatmap":result})
 
 
+@app.route('/get/nearby', methods=['POST'])
+def my_nearby_endpoint():
+    input_json = request.get_json(force=True)
+    # force=True, above, is necessary if another developer
+    # forgot to set the MIME type to 'application/json'
+    lat = float(input_json['lat'])
+    lng = float(input_json['lng'])
+    boop = Firebase()
+    result = boop.getEveryonePoits((lat,lng))
+    return jsonify({"nearby":result})
+
 @app.route('/get/traffic', methods=['POST'])
 def poopyPie():
     traffic = []

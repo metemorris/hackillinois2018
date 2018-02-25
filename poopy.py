@@ -40,4 +40,5 @@ print(boop.decryptLocation("12733233-5796878"))
 
 lat = 40.115421
 lng = -88.24338
-print(boop.getCrazyHeat(lat,lng))
+current = (lat,lng)
+print(boop.getEveryonePoits(current))

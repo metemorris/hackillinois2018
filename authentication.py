@@ -149,6 +149,39 @@ class Firebase:
             locationArr.append(locationDict4)
         return locationArr
 
+    def getEveryonePoits(self,current_point):
+        locations_result = self.firebase.get("location", None)
+        # print(locations_result)
+        locations = []
+        for i in locations_result:
+            locations.append(self.decryptLocation(i))
+        # print(locations)
+        tree = KDTree(locations, distance_metric='Arc', radius=pysal.cg.RADIUS_EARTH_MILES)
+        # get all points within 1 mile of 'current_point'
+        indices = tree.query_ball_point(current_point, 40)
+
+        usrIds = []
+        for i in indices:
+            lolz = self.encryptLocation(locations[i])
+            if lolz in locations_result:
+                if isinstance(locations_result[lolz], dict):
+                    #print(locations_result[lolz])
+                    booz = list(locations_result[lolz].keys())[0]
+                    usrIds.append(booz)
+        user_result = self.firebase.get("user",None)
+
+        finalAns = []
+        for i in usrIds:
+            kiss = user_result[i].keys()
+            for i in kiss:
+                longLatDic = dict()
+                loc = self.decryptLocation(i)
+                longLatDic['lat'] = loc[0]
+                longLatDic['lng'] = loc[1]
+                finalAns.append(longLatDic)
+        return finalAns
+
+
     def decryptLocation(self,user_id):
         lolz = user_id.split("-")
         lat = lolz[0]
