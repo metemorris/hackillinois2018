@@ -37,6 +37,22 @@ export default class App extends Component {
     };
   }
 
+  _getHeatMapPoints = () => {
+      const body = {
+          lat: this.state.latitude,
+          lng: this.state.longitude,
+      }
+      fetch("https://hackil18.herokuapp.com/get/nearby", {
+          body: JSON.stringify([body]),
+          method: 'POST'
+      }).then((res)=> res.json())
+          .then((res) => {
+              console.log(res);
+              this.setState({heatmap: res.nearby});
+          })
+          .catch((err) => console.log(err))
+  }
+
   _generateHeatMap = () => {
       return <WebView
           pointerEvents="none"
