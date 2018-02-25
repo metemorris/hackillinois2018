@@ -1,5 +1,4 @@
 /**
- * Sample React Native App
  * https://github.com/facebook/react-native
  * @flow
  */
@@ -7,7 +6,7 @@
 import React, { Component } from 'react';
 import RNPlaces from 'react-native-google-places';
 import MapView, {Marker} from "react-native-maps";
-import uuid from "uuid/v4"
+import uuid from "uuid/v4";
 import heatView from "./web/heatView.html";
 import locIcon from "./assets/loc2.png";
 
