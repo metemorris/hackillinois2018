@@ -22,6 +22,7 @@ import {
   Image
 } from 'react-native';
 import {getDirections, getPolyLines} from "./apis/maps";
+import {runHeatMap} from "./apis/heatmap";
 
 export default class App extends Component {
   constructor(props){
@@ -54,13 +55,14 @@ export default class App extends Component {
   }
 
   _generateHeatMap = () => {
+      const script = runHeatMap([]);
       return <WebView
-          pointerEvents="none"
-          style={{opacity: 0.2}}
-          source={heatView}
-          scrollEnabled={false}
-          javaScriptEnabled
-      />;
+                  pointerEvents="none"
+                  style={{opacity: 0.2}}
+                  source={heatView}
+                  scrollEnabled={false}
+                  injectedJavaScript={script}
+                  javaScriptEnabled />;
   }
 
   _getIncidents = () => {

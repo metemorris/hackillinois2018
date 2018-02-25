@@ -1,6 +1,4 @@
-export const runScripts = (data) => {
-
-    // now generate some random data
+export const runHeatMap = (points) => {
     var points = [];
     var max = 0;
     var width = 1080;
@@ -18,10 +16,13 @@ export const runScripts = (data) => {
         points.push(point);
     }
 
-    var data = {
-        max: max,
-        data: points
-    };
-
-    return `heatmapInstance.setData(data);`
+    return `
+    var heatmapInstance = h337.create({
+        container: document.getElementById("heatmap")
+    });
+    heatmapInstance.setData({
+      max: ${max},
+      data: ${JSON.stringify(points)}
+    });
+  `;
 }
