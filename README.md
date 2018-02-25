@@ -73,7 +73,7 @@ Instructions
 
 First, you'll need to clone the repo.
 
-    $ git clone https://github.com/adityaparakh/hackillinois18backend.git
+    $ git clone https://github.com/metemorris/hackillinois2018.git
 
 Second, let's download `pip`, `virtualenv`, `foreman`, and the [`heroku`
 Ruby gem](http://devcenter.heroku.com/articles/using-the-cli).
