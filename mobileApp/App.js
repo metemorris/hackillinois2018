@@ -235,12 +235,12 @@ export default class App extends Component {
                     justifyContent: "center",
                     width:35,
                     height:35
-                               
                 }}
                 onPress={this._thrash}>
                 <Image
                     style={{
-                        maxWidth:35,
+                        maxWidth: 35,
+                        maxHeight: 35,
                         resizeMode:"contain"
                     }
                     }
@@ -266,15 +266,14 @@ export default class App extends Component {
                     justifyContent: "center",
                     width:35,
                     height:35
-                               
                 }}
                 onPress={this._route}>
                 <Image
                     style={{
-                        maxWidth:35,
+                        maxWidth: 35,
+                        maxHeight: 35,
                         resizeMode:"contain"
-                    }
-                    }
+                    }}
                     source={require('./assets/hazard.png')}
                 />
                 </TouchableOpacity>
@@ -297,15 +296,14 @@ export default class App extends Component {
                     justifyContent: "center",
                     width:35,
                     height:35
-                               
                 }}
                 onPress={this.onPress}>
                 <Image
                     style={{
-                        maxWidth:35,
+                        maxWidth: 35,
+                        maxHeight: 35,
                         resizeMode:"contain"
-                    }
-                    }
+                    }}
                     source={require('./assets/event.png')}
                 />
                 </TouchableOpacity>
@@ -329,15 +327,14 @@ export default class App extends Component {
                     justifyContent: "center",
                     width:35,
                     height:35
-                               
                 }}
                 onPress={this._warning}>
                 <Image
                     style={{
-                        maxWidth:35,
+                        maxWidth: 35,
+                        maxHeight: 35,
                         resizeMode:"contain"
-                    }
-                    }
+                    }}
                     source={require('./assets/warning-sign.png')}
                 />
                 </TouchableOpacity>
@@ -361,15 +358,14 @@ export default class App extends Component {
                     justifyContent: "center",
                     width:35,
                     height:35
-                               
                 }}
                 onPress={this.onPress}>
                 <Image
                     style={{
                         maxWidth:35,
+                        maxHeight: 35,
                         resizeMode:"contain"
-                    }
-                    }
+                    }}
                     source={require('./assets/heart.png')}
                 />
                 </TouchableOpacity>
@@ -392,15 +388,14 @@ export default class App extends Component {
                     justifyContent: "center",
                     width:35,
                     height:35
-                               
                 }}
                 onPress={this.onPress}>
                 <Image
                     style={{
                         maxWidth:35,
+                        maxHeight: 35,
                         resizeMode:"contain"
-                    }
-                    }
+                    }}
                     source={require('./assets/thief.png')}
                 />
                 </TouchableOpacity>
