@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import RNPlaces from 'react-native-google-places';
-import MapView from "react-native-maps";
+import MapView, {Marker} from "react-native-maps";
 import uuid from "uuid/v4"
 import heatView from "./web/heatView.html";
 
@@ -114,13 +114,22 @@ export default class App extends Component {
               region={{
                   latitude: this.state.latitude,
                   longitude: this.state.longitude,
-                  latitudeDelta: 0.1,
-                  longitudeDelta: 0.11,
+                  latitudeDelta: 0.012,
+                  longitudeDelta: 0.015,
               }}>
               <MapView.Polyline
                   coordinates={this.state.coords}
                   strokeWidth={2}
                   strokeColor="red"/>
+              {
+                  this.state.dest.latitude ?
+                      <Marker
+                          coordinate={{latitude: this.state.dest.latitude, longitude: this.state.dest.longitude}}
+                          title={this.state.dest.name}
+                          description={this.state.dest.description}
+                      /> :
+                      <View/>
+              }
           </MapView>
           <View pointerEvents="none" style={{position:"absolute", width: "100%", height: "100%"}}>
               {this._generateHeatMap()}
